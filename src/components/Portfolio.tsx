@@ -1,0 +1,160 @@
+import React, { useState } from 'react';
+import { Plus, TrendingUp, TrendingDown, Trash2 } from 'lucide-react';
+
+interface Position {
+  id: string;
+  ticker: string;
+  shares: number;
+  avgCost: number;
+  currentPrice: number;
+}
+
+const Portfolio: React.FC = () => {
+  const [positions, setPositions] = useState<Position[]>([
+    { id: '1', ticker: 'AAPL', shares: 50, avgCost: 150.00, currentPrice: 175.50 },
+    { id: '2', ticker: 'MSFT', shares: 30, avgCost: 350.00, currentPrice: 380.25 },
+    { id: '3', ticker: 'GOOGL', shares: 20, avgCost: 135.00, currentPrice: 142.30 },
+  ]);
+
+  const calculateMetrics = (position: Position) => {
+    const totalCost = position.shares * position.avgCost;
+    const currentValue = position.shares * position.currentPrice;
+    const gainLoss = currentValue - totalCost;
+    const gainLossPercent = (gainLoss / totalCost) * 100;
+
+    return {
+      totalCost,
+      currentValue,
+      gainLoss,
+      gainLossPercent,
+    };
+  };
+
+  const portfolioValue = positions.reduce((sum, pos) => {
+    return sum + (pos.shares * pos.currentPrice);
+  }, 0);
+
+  const totalCost = positions.reduce((sum, pos) => {
+    return sum + (pos.shares * pos.avgCost);
+  }, 0);
+
+  const totalGainLoss = portfolioValue - totalCost;
+  const totalGainLossPercent = (totalGainLoss / totalCost) * 100;
+
+  const deletePosition = (id: string) => {
+    setPositions(positions.filter(p => p.id !== id));
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Portfolio Summary */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+          <div className="text-sm text-slate-400 mb-2">Total Value</div>
+          <div className="text-3xl font-bold">${portfolioValue.toFixed(2)}</div>
+        </div>
+        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+          <div className="text-sm text-slate-400 mb-2">Total Cost</div>
+          <div className="text-3xl font-bold">${totalCost.toFixed(2)}</div>
+        </div>
+        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+          <div className="text-sm text-slate-400 mb-2">Gain/Loss</div>
+          <div className={`text-3xl font-bold ${totalGainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+            {totalGainLoss >= 0 ? '+' : ''}${totalGainLoss.toFixed(2)}
+          </div>
+        </div>
+        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+          <div className="text-sm text-slate-400 mb-2">Return</div>
+          <div className={`text-3xl font-bold flex items-center gap-2 ${totalGainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+            {totalGainLossPercent >= 0 ? <TrendingUp /> : <TrendingDown />}
+            {totalGainLossPercent >= 0 ? '+' : ''}{totalGainLossPercent.toFixed(2)}%
+          </div>
+        </div>
+      </div>
+
+      {/* Positions Table */}
+      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-semibold">Your Positions</h3>
+          <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+            <Plus size={18} />
+            Add Position
+          </button>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-slate-800">
+                <th className="text-left py-3 px-4 text-sm font-semibold text-slate-400">Ticker</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Shares</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Avg Cost</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Current Price</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Total Value</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Gain/Loss</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Return</th>
+                <th className="text-center py-3 px-4 text-sm font-semibold text-slate-400">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {positions.map((position) => {
+                const metrics = calculateMetrics(position);
+                return (
+                  <tr key={position.id} className="border-b border-slate-800 hover:bg-slate-800 transition-colors">
+                    <td className="py-4 px-4 font-semibold text-blue-400">{position.ticker}</td>
+                    <td className="py-4 px-4 text-right">{position.shares}</td>
+                    <td className="py-4 px-4 text-right">${position.avgCost.toFixed(2)}</td>
+                    <td className="py-4 px-4 text-right">${position.currentPrice.toFixed(2)}</td>
+                    <td className="py-4 px-4 text-right font-semibold">${metrics.currentValue.toFixed(2)}</td>
+                    <td className={`py-4 px-4 text-right font-semibold ${metrics.gainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      {metrics.gainLoss >= 0 ? '+' : ''}${metrics.gainLoss.toFixed(2)}
+                    </td>
+                    <td className={`py-4 px-4 text-right font-semibold ${metrics.gainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      {metrics.gainLossPercent >= 0 ? '+' : ''}{metrics.gainLossPercent.toFixed(2)}%
+                    </td>
+                    <td className="py-4 px-4 text-center">
+                      <button
+                        onClick={() => deletePosition(position.id)}
+                        className="p-2 hover:bg-red-900/30 rounded-lg transition-colors"
+                      >
+                        <Trash2 size={16} className="text-red-400" />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Allocation Chart */}
+      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+        <h3 className="text-xl font-semibold mb-6">Portfolio Allocation</h3>
+        <div className="space-y-4">
+          {positions.map((position) => {
+            const value = position.shares * position.currentPrice;
+            const percentage = (value / portfolioValue) * 100;
+            
+            return (
+              <div key={position.id}>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-semibold">{position.ticker}</span>
+                  <span className="text-slate-400">{percentage.toFixed(1)}%</span>
+                </div>
+                <div className="w-full bg-slate-800 rounded-full h-3">
+                  <div
+                    className="bg-blue-600 h-3 rounded-full transition-all duration-500"
+                    style={{ width: `${percentage}%` }}
+                  ></div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Portfolio;
