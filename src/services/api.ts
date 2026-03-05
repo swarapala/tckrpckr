@@ -114,7 +114,7 @@ const generateMockHistoricalData = (timeRange: string) => {
 };
 
 const generateMockOptions = (type: 'call' | 'put') => {
-  const options = [];
+  const options: any[] = [];
   const strikes = [140, 145, 150, 155, 160, 165, 170];
   const expirations = [7, 14, 30, 60, 90];
 
