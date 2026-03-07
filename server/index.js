@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const yahooFinance = require('yahoo-finance2');
 require('dotenv').config();
 
 const Anthropic = require('@anthropic-ai/sdk');
@@ -16,164 +15,120 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Cache for reducing API calls
+// In-memory cache
 const cache = new Map();
-const CACHE_DURATION = 60000; // 1 minute
+const CACHE_DURATION = 60000; // 60 seconds
 
-function getCached(key) {
-  const cached = cache.get(key);
-  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
-    return cached.data;
-  }
-  return null;
-}
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
-function setCache(key, data) {
-  cache.set(key, { data, timestamp: Date.now() });
-}
-
-// Routes
-
-// Get stock quote
+// Stock quote endpoint
 app.get('/api/quote/:ticker', async (req, res) => {
   try {
     const { ticker } = req.params;
-    const cacheKey = `quote-${ticker}`;
     
-    const cached = getCached(cacheKey);
-    if (cached) {
-      return res.json(cached);
-    }
-
-    const quote = await yahooFinance.quote(ticker);
-    
-    const data = {
-      symbol: quote.symbol,
-      name: quote.longName || quote.shortName,
-      price: quote.regularMarketPrice,
-      change: quote.regularMarketChange,
-      changePercent: quote.regularMarketChangePercent / 100,
-      marketCap: quote.marketCap,
-      pe: quote.trailingPE,
-      fiftyTwoWeekHigh: quote.fiftyTwoWeekHigh,
-      fiftyTwoWeekLow: quote.fiftyTwoWeekLow,
-      avgVolume: quote.averageDailyVolume3Month,
-      beta: quote.beta,
-      exchange: quote.exchange,
-    };
-
-    setCache(cacheKey, data);
-    res.json(data);
+    // Return mock data
+    res.json({
+      symbol: ticker,
+      name: `${ticker} Inc.`,
+      price: Math.random() * 200 + 100,
+      change: Math.random() * 10 - 5,
+      changePercent: (Math.random() * 0.1 - 0.05),
+      marketCap: Math.random() * 3000000000000,
+      pe: Math.random() * 40 + 10,
+      fiftyTwoWeekHigh: Math.random() * 300 + 150,
+      fiftyTwoWeekLow: Math.random() * 150 + 50,
+      avgVolume: Math.floor(Math.random() * 100000000),
+      beta: Math.random() * 2,
+      exchange: 'NASDAQ',
+    });
   } catch (error) {
-    console.error('Error fetching quote:', error);
+    console.error('Error in quote endpoint:', error);
     res.status(500).json({ error: 'Failed to fetch quote' });
   }
 });
 
-// Get historical data
+// Historical data endpoint
 app.get('/api/historical/:ticker', async (req, res) => {
   try {
     const { ticker } = req.params;
     const { range = '1M' } = req.query;
     
-    const cacheKey = `historical-${ticker}-${range}`;
-    const cached = getCached(cacheKey);
-    if (cached) {
-      return res.json(cached);
+    const days = range === '1D' ? 1 : range === '5D' ? 5 : range === '1M' ? 30 : 90;
+    const data = [];
+    const basePrice = 150;
+
+    for (let i = days; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      
+      const close = basePrice + (Math.random() * 20 - 10);
+      
+      data.push({
+        date: date.toISOString().split('T')[0],
+        open: close + (Math.random() * 2 - 1),
+        high: close + Math.abs(Math.random() * 3),
+        low: close - Math.abs(Math.random() * 3),
+        close,
+        volume: Math.floor(Math.random() * 50000000) + 10000000,
+      });
     }
 
-    const rangeMap = {
-      '1D': { period1: new Date(Date.now() - 24 * 60 * 60 * 1000), period2: new Date(), interval: '5m' },
-      '5D': { period1: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), period2: new Date(), interval: '15m' },
-      '1M': { period1: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), period2: new Date(), interval: '1d' },
-      '3M': { period1: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000), period2: new Date(), interval: '1d' },
-      '6M': { period1: new Date(Date.now() - 180 * 24 * 60 * 60 * 1000), period2: new Date(), interval: '1d' },
-      'YTD': { period1: new Date(new Date().getFullYear(), 0, 1), period2: new Date(), interval: '1d' },
-      '1Y': { period1: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000), period2: new Date(), interval: '1d' },
-      '5Y': { period1: new Date(Date.now() - 5 * 365 * 24 * 60 * 60 * 1000), period2: new Date(), interval: '1wk' },
-    };
-
-    const queryOptions = rangeMap[range] || rangeMap['1M'];
-    const history = await yahooFinance.historical(ticker, queryOptions);
-
-    const data = history.map(item => ({
-      date: item.date.toISOString().split('T')[0],
-      open: item.open,
-      high: item.high,
-      low: item.low,
-      close: item.close,
-      volume: item.volume,
-    }));
-
-    setCache(cacheKey, data);
     res.json(data);
   } catch (error) {
-    console.error('Error fetching historical data:', error);
+    console.error('Error in historical endpoint:', error);
     res.status(500).json({ error: 'Failed to fetch historical data' });
   }
 });
 
-// Get options chain
+// Options chain endpoint
 app.get('/api/options/:ticker', async (req, res) => {
   try {
     const { ticker } = req.params;
-    const cacheKey = `options-${ticker}`;
     
-    const cached = getCached(cacheKey);
-    if (cached) {
-      return res.json(cached);
-    }
+    const strikes = [140, 145, 150, 155, 160, 165, 170];
+    const calls = [];
+    const puts = [];
 
-    const options = await yahooFinance.options(ticker);
-    
-    if (!options || !options.options || options.options.length === 0) {
-      return res.json({ calls: [], puts: [] });
-    }
+    strikes.forEach(strike => {
+      calls.push({
+        strike,
+        lastPrice: Math.random() * 10 + 1,
+        bid: Math.random() * 9,
+        ask: Math.random() * 10 + 1,
+        volume: Math.floor(Math.random() * 1000),
+        openInterest: Math.floor(Math.random() * 5000),
+        impliedVolatility: Math.random() * 0.5 + 0.2,
+        expiration: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        daysToExpiration: 30,
+      });
 
-    const firstExpiration = options.options[0];
-    
-    const data = {
-      calls: firstExpiration.calls.map(opt => ({
-        strike: opt.strike,
-        expiration: new Date(opt.expiration * 1000).toISOString().split('T')[0],
-        daysToExpiration: Math.ceil((opt.expiration * 1000 - Date.now()) / (1000 * 60 * 60 * 24)),
-        lastPrice: opt.lastPrice,
-        bid: opt.bid,
-        ask: opt.ask,
-        volume: opt.volume,
-        openInterest: opt.openInterest,
-        impliedVolatility: opt.impliedVolatility,
-        inTheMoney: opt.inTheMoney,
-      })),
-      puts: firstExpiration.puts.map(opt => ({
-        strike: opt.strike,
-        expiration: new Date(opt.expiration * 1000).toISOString().split('T')[0],
-        daysToExpiration: Math.ceil((opt.expiration * 1000 - Date.now()) / (1000 * 60 * 60 * 24)),
-        lastPrice: opt.lastPrice,
-        bid: opt.bid,
-        ask: opt.ask,
-        volume: opt.volume,
-        openInterest: opt.openInterest,
-        impliedVolatility: opt.impliedVolatility,
-        inTheMoney: opt.inTheMoney,
-      })),
-    };
+      puts.push({
+        strike,
+        lastPrice: Math.random() * 10 + 1,
+        bid: Math.random() * 9,
+        ask: Math.random() * 10 + 1,
+        volume: Math.floor(Math.random() * 1000),
+        openInterest: Math.floor(Math.random() * 5000),
+        impliedVolatility: Math.random() * 0.5 + 0.2,
+        expiration: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        daysToExpiration: 30,
+      });
+    });
 
-    setCache(cacheKey, data);
-    res.json(data);
+    res.json({ calls, puts });
   } catch (error) {
-    console.error('Error fetching options:', error);
-    res.status(500).json({ error: 'Failed to fetch options chain' });
+    console.error('Error in options endpoint:', error);
+    res.status(500).json({ error: 'Failed to fetch options' });
   }
 });
 
-// Get recommendations (AI-powered)
+// Recommendations endpoint
 app.get('/api/recommendations/:ticker', async (req, res) => {
   try {
-    const { ticker } = req.params;
-    
-    // Mock data for now
-    const data = {
+    res.json({
       similar: [
         {
           symbol: 'MSFT',
@@ -183,92 +138,58 @@ app.get('/api/recommendations/:ticker', async (req, res) => {
           changePercent: 0.61,
           rating: 'Buy',
           similarity: 0.85,
-          reason: 'Similar tech sector, comparable market cap',
         },
       ],
       diversification: [
         {
           sector: 'Healthcare',
-          reason: 'Low correlation with tech sector',
-          suggestions: ['JNJ', 'UNH', 'PFE'],
+          reason: 'Low correlation with tech',
+          suggestions: ['JNJ', 'UNH'],
           recommendedWeight: 15,
         },
       ],
       insights: [
         {
           title: 'Strong Technical Setup',
-          description: 'Price above 50-day MA with increasing volume',
+          description: 'Price above 50-day MA',
           confidence: 0.75,
         },
       ],
-    };
-
-    res.json(data);
+    });
   } catch (error) {
-    console.error('Error generating recommendations:', error);
-    res.status(500).json({ error: 'Failed to generate recommendations' });
+    console.error('Error in recommendations endpoint:', error);
+    res.status(500).json({ error: 'Failed to fetch recommendations' });
   }
 });
 
-// Get news
-// Get news (all)
-app.get('/api/news', async (req, res) => {
+// News endpoint
+app.get('/api/news/:ticker?', async (req, res) => {
   try {
-    const mockNews = [
+    res.json([
       {
         id: 1,
         title: 'Market Rallies on Fed Comments',
-        summary: 'Federal Reserve signals potential pause in rate hikes',
+        summary: 'Federal Reserve signals potential pause',
         source: 'Financial Times',
         timestamp: new Date(Date.now() - 3600000).toISOString(),
         sentiment: 'positive',
+        tickers: ['SPY', 'QQQ'],
       },
-      {
-        id: 2,
-        title: 'Tech Earnings Beat Expectations',
-        summary: 'Major technology companies report strong quarterly results',
-        source: 'Bloomberg',
-        timestamp: new Date(Date.now() - 7200000).toISOString(),
-        sentiment: 'positive',
-      },
-    ];
-
-    res.json(mockNews);
+    ]);
   } catch (error) {
-    console.error('Error fetching news:', error);
+    console.error('Error in news endpoint:', error);
     res.status(500).json({ error: 'Failed to fetch news' });
   }
 });
 
-// Get news by ticker
-app.get('/api/news/:ticker', async (req, res) => {
-  try {
-    const mockNews = [
-      {
-        id: 1,
-        title: 'Market Rallies on Fed Comments',
-        summary: 'Federal Reserve signals potential pause in rate hikes',
-        source: 'Financial Times',
-        timestamp: new Date(Date.now() - 3600000).toISOString(),
-        sentiment: 'positive',
-      },
-    ];
-
-    res.json(mockNews);
-  } catch (error) {
-    console.error('Error fetching news:', error);
-    res.status(500).json({ error: 'Failed to fetch news' });
-  }
-});
-
-// AI Chatbot endpoint
+// AI Chat endpoint
 app.post('/api/chat', async (req, res) => {
   try {
     const { message } = req.body;
 
     if (!process.env.ANTHROPIC_API_KEY) {
       return res.json({
-        response: "AI features require a Claude API key. Please add ANTHROPIC_API_KEY to your .env file.",
+        response: "AI features require a Claude API key.",
       });
     }
 
@@ -294,11 +215,6 @@ app.post('/api/chat', async (req, res) => {
       details: error.message 
     });
   }
-});
-
-// Health check
-app.get('/health', (req, res) => {
-  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
 app.listen(PORT, () => {
