@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const yahooFinance = require('yahoo-finance2').default;
+const yahooFinance = require('yahoo-finance2');
 require('dotenv').config();
 
 const Anthropic = require('@anthropic-ai/sdk');
