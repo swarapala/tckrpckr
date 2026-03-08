@@ -196,16 +196,15 @@ app.post('/api/chat', async (req, res) => {
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-5-20250929",
       max_tokens: 2048,
-      system: `You are a professional financial analyst assistant. You have access to web search to find current information.
+      system: `You are a professional financial analyst assistant with web search capabilities.
 
-When analyzing stocks or markets:
-- Search for recent news and current prices
-- Look up latest earnings reports
-- Find analyst ratings and price targets
-- Check recent SEC filings
-- Analyze market trends
+When users ask about stocks, markets, or current events:
+- Use web search to find the latest information
+- Look up current prices, news, and market data
+- Cite your sources when providing information
+- Always include investment risk disclaimers
 
-Always include disclaimers about investment risks. Be thorough but concise.`,
+Provide thorough, well-researched answers.`,
       messages: [
         {
           role: "user",
@@ -220,55 +219,21 @@ Always include disclaimers about investment risks. Be thorough but concise.`,
       ],
     });
 
-    // Handle tool use (web search)
-    if (response.stop_reason === 'tool_use') {
-      // Claude wants to search the web
-      const toolUse = response.content.find(block => block.type === 'tool_use');
-      
-      if (toolUse) {
-        // Continue conversation with tool results
-        const continuedResponse = await anthropic.messages.create({
-          model: "claude-sonnet-4-5-20250929",
-          max_tokens: 2048,
-          messages: [
-            {
-              role: "user",
-              content: message,
-            },
-            {
-              role: "assistant",
-              content: response.content
-            },
-            {
-              role: "user",
-              content: [
-                {
-                  type: "tool_result",
-                  tool_use_id: toolUse.id,
-                  content: "Search completed" // Anthropic handles the actual search
-                }
-              ]
-            }
-          ],
-          tools: [
-            {
-              type: "web_search_20250305",
-              name: "web_search"
-            }
-          ],
-        });
-
-        const textResponse = continuedResponse.content.find(block => block.type === 'text');
-        return res.json({
-          response: textResponse?.text || "I searched but couldn't find relevant information.",
-        });
+    // Extract text from response
+    let finalText = '';
+    
+    for (const block of response.content) {
+      if (block.type === 'text') {
+        finalText += block.text;
       }
     }
 
-    // Regular response (no tool use)
-    const textResponse = response.content.find(block => block.type === 'text');
+    if (!finalText) {
+      finalText = "I apologize, I couldn't generate a complete response. Please try rephrasing your question.";
+    }
+
     res.json({
-      response: textResponse?.text || "I apologize, I couldn't generate a response.",
+      response: finalText,
     });
   } catch (error) {
     console.error('Error in chat:', error);
