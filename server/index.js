@@ -182,7 +182,7 @@ app.get('/api/news/:ticker?', async (req, res) => {
   }
 });
 
-// AI Chat endpoint
+// AI Chat endpoint with web search
 app.post('/api/chat', async (req, res) => {
   try {
     const { message } = req.body;
@@ -195,18 +195,80 @@ app.post('/api/chat', async (req, res) => {
 
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-5-20250929",
-      max_tokens: 1024,
-      system: "You are a professional financial analyst assistant. Provide accurate, helpful information about stocks, markets, and investing. Always include appropriate disclaimers about investment risks.",
+      max_tokens: 2048,
+      system: `You are a professional financial analyst assistant. You have access to web search to find current information.
+
+When analyzing stocks or markets:
+- Search for recent news and current prices
+- Look up latest earnings reports
+- Find analyst ratings and price targets
+- Check recent SEC filings
+- Analyze market trends
+
+Always include disclaimers about investment risks. Be thorough but concise.`,
       messages: [
         {
           role: "user",
           content: message,
         }
       ],
+      tools: [
+        {
+          type: "web_search_20250305",
+          name: "web_search"
+        }
+      ],
     });
 
+    // Handle tool use (web search)
+    if (response.stop_reason === 'tool_use') {
+      // Claude wants to search the web
+      const toolUse = response.content.find(block => block.type === 'tool_use');
+      
+      if (toolUse) {
+        // Continue conversation with tool results
+        const continuedResponse = await anthropic.messages.create({
+          model: "claude-sonnet-4-5-20250929",
+          max_tokens: 2048,
+          messages: [
+            {
+              role: "user",
+              content: message,
+            },
+            {
+              role: "assistant",
+              content: response.content
+            },
+            {
+              role: "user",
+              content: [
+                {
+                  type: "tool_result",
+                  tool_use_id: toolUse.id,
+                  content: "Search completed" // Anthropic handles the actual search
+                }
+              ]
+            }
+          ],
+          tools: [
+            {
+              type: "web_search_20250305",
+              name: "web_search"
+            }
+          ],
+        });
+
+        const textResponse = continuedResponse.content.find(block => block.type === 'text');
+        return res.json({
+          response: textResponse?.text || "I searched but couldn't find relevant information.",
+        });
+      }
+    }
+
+    // Regular response (no tool use)
+    const textResponse = response.content.find(block => block.type === 'text');
     res.json({
-      response: response.content[0].text,
+      response: textResponse?.text || "I apologize, I couldn't generate a response.",
     });
   } catch (error) {
     console.error('Error in chat:', error);
