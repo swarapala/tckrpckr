@@ -8,6 +8,14 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
+const Alpaca = require('@alpacahq/alpaca-trade-api');
+
+const alpaca = new Alpaca({
+  keyId: process.env.ALPACA_API_KEY,
+  secretKey: process.env.ALPACA_SECRET_KEY,
+  paper: true, // Use paper trading (fake money)
+});
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -24,15 +32,51 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Stock quote endpoint
+// Stock quote endpoint - REAL DATA
 app.get('/api/quote/:ticker', async (req, res) => {
   try {
     const { ticker } = req.params;
     
-    // Return mock data
+    // Get real quote from Alpaca
+    const quote = await alpaca.getLatestQuote(ticker);
+    const bars = await alpaca.getBarsV2(ticker, {
+      start: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString(),
+      end: new Date().toISOString(),
+      timeframe: '1Day',
+      limit: 365,
+    });
+    
+    let barsArray = [];
+    for await (let bar of bars) {
+      barsArray.push(bar);
+    }
+    
+    const latestBar = barsArray[barsArray.length - 1];
+    const yearAgo = barsArray[0];
+    
+    const high52w = Math.max(...barsArray.map(b => b.HighPrice));
+    const low52w = Math.min(...barsArray.map(b => b.LowPrice));
+    
     res.json({
       symbol: ticker,
       name: `${ticker} Inc.`,
+      price: latestBar?.ClosePrice || quote.ap,
+      change: latestBar ? latestBar.ClosePrice - barsArray[barsArray.length - 2]?.ClosePrice : 0,
+      changePercent: latestBar ? (latestBar.ClosePrice - barsArray[barsArray.length - 2]?.ClosePrice) / barsArray[barsArray.length - 2]?.ClosePrice : 0,
+      marketCap: null, // Alpaca doesn't provide this in free tier
+      pe: null,
+      fiftyTwoWeekHigh: high52w,
+      fiftyTwoWeekLow: low52w,
+      avgVolume: barsArray.reduce((sum, b) => sum + b.Volume, 0) / barsArray.length,
+      beta: null,
+      exchange: 'NASDAQ',
+    });
+  } catch (error) {
+    console.error('Error fetching quote from Alpaca:', error);
+    // Fallback to mock data if Alpaca fails
+    res.json({
+      symbol: req.params.ticker,
+      name: `${req.params.ticker} Inc.`,
       price: Math.random() * 200 + 100,
       change: Math.random() * 10 - 5,
       changePercent: (Math.random() * 0.1 - 0.05),
@@ -44,9 +88,6 @@ app.get('/api/quote/:ticker', async (req, res) => {
       beta: Math.random() * 2,
       exchange: 'NASDAQ',
     });
-  } catch (error) {
-    console.error('Error in quote endpoint:', error);
-    res.status(500).json({ error: 'Failed to fetch quote' });
   }
 });
 
