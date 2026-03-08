@@ -9,7 +9,15 @@ interface Position {
   currentPrice: number;
 }
 
+
 const Portfolio: React.FC = () => {
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newPosition, setNewPosition] = useState({
+    ticker: '',
+    shares: '',
+    avgCost: '',
+  });
+
   const [positions, setPositions] = useState<Position[]>([
     { id: '1', ticker: 'AAPL', shares: 50, avgCost: 150.00, currentPrice: 175.50 },
     { id: '2', ticker: 'MSFT', shares: 30, avgCost: 350.00, currentPrice: 380.25 },
@@ -76,10 +84,13 @@ const Portfolio: React.FC = () => {
       <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-semibold">Your Positions</h3>
-          <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
-            <Plus size={18} />
-            Add Position
-          </button>
+          <button 
+  onClick={() => setShowAddModal(true)}
+  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+>
+  <Plus size={18} />
+  Add Position
+</button>
         </div>
 
         <div className="overflow-x-auto">
@@ -153,6 +164,81 @@ const Portfolio: React.FC = () => {
           })}
         </div>
       </div>
+
+      {/* Add Position Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-slate-900 rounded-xl p-6 max-w-md w-full border border-slate-800">
+            <h3 className="text-xl font-bold mb-4">Add New Position</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Ticker Symbol</label>
+                <input
+                  type="text"
+                  value={newPosition.ticker}
+                  onChange={(e) => setNewPosition({...newPosition, ticker: e.target.value.toUpperCase()})}
+                  placeholder="AAPL"
+                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Number of Shares</label>
+                <input
+                  type="number"
+                  value={newPosition.shares}
+                  onChange={(e) => setNewPosition({...newPosition, shares: e.target.value})}
+                  placeholder="10"
+                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Average Cost Per Share</label>
+                <input
+                  type="number"
+                  value={newPosition.avgCost}
+                  onChange={(e) => setNewPosition({...newPosition, avgCost: e.target.value})}
+                  placeholder="150.00"
+                  step="0.01"
+                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <div className="flex gap-2 pt-4">
+                <button
+                  onClick={() => {
+                    if (newPosition.ticker && newPosition.shares && newPosition.avgCost) {
+                      setPositions([
+                        ...positions,
+                        {
+                          id: Date.now().toString(),
+                          ticker: newPosition.ticker,
+                          shares: parseFloat(newPosition.shares),
+                          avgCost: parseFloat(newPosition.avgCost),
+                          currentPrice: parseFloat(newPosition.avgCost), // Will be updated with real price
+                        }
+                      ]);
+                      setNewPosition({ ticker: '', shares: '', avgCost: '' });
+                      setShowAddModal(false);
+                    }
+                  }}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-lg transition-colors"
+                >
+                  Add Position
+                </button>
+                <button
+                  onClick={() => {
+                    setShowAddModal(false);
+                    setNewPosition({ ticker: '', shares: '', avgCost: '' });
+                  }}
+                  className="flex-1 bg-slate-700 hover:bg-slate-600 py-2 rounded-lg transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
     </div>
   );
 };
