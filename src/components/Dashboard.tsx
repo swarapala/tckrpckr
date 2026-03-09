@@ -80,13 +80,14 @@ const Dashboard: React.FC = () => {
           })}
         </nav>
 
-        <div className="p-4 border-t border-slate-800">
+       <div className="p-4 border-t border-slate-800">
   <button 
     onClick={() => {
-  alert('Settings button clicked!');
-  setShowSettings(true);
-}}
-    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
+      alert('Settings button clicked!');
+      setShowSettings(true);
+    }}
+    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors relative z-50 cursor-pointer"
+    style={{ pointerEvents: 'auto' }}
   >
     <Settings size={20} />
     <span className="font-medium">Settings</span>
