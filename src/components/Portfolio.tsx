@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Plus, TrendingUp, TrendingDown, Trash2 } from 'lucide-react';
-import { useEffect } from 'react';
+import { fetchStockQuote } from '../services/api';
+import React, { useState, useEffect } from 'react';
 import { fetchStockQuote } from '../services/api';
 
 interface Position {
@@ -26,7 +27,7 @@ const Portfolio: React.FC = () => {
     { id: '2', ticker: 'MSFT', shares: 30, avgCost: 350.00, currentPrice: 380.25 },
     { id: '3', ticker: 'GOOGL', shares: 20, avgCost: 135.00, currentPrice: 142.30 },
   ]);
-  // Fetch real-time prices
+// Fetch real-time prices on mount only
 useEffect(() => {
   const updatePrices = async () => {
     const updatedPositions = await Promise.all(
@@ -46,10 +47,43 @@ useEffect(() => {
     setPositions(updatedPositions);
   };
 
-  updatePrices();
-  const interval = setInterval(updatePrices, 60000); // Update every minute
-  return () => clearInterval(interval);
-}, []);
+  if (positions.length > 0) {
+    updatePrices();
+    const interval = setInterval(updatePrices, 60000); // Update every minute
+    return () => clearInterval(interval);
+  }
+}, []); // Empty dependency - only run on mount
+
+// Fetch price for newly added positions
+useEffect(() => {
+  const fetchNewPrices = async () => {
+    const positionsNeedingUpdate = positions.filter(p => p.currentPrice === p.avgCost);
+    
+    if (positionsNeedingUpdate.length > 0) {
+      const updated = await Promise.all(
+        positionsNeedingUpdate.map(async (position) => {
+          try {
+            const quote = await fetchStockQuote(position.ticker);
+            return {
+              ...position,
+              currentPrice: quote.price,
+            };
+          } catch (error) {
+            console.error(`Error fetching price for ${position.ticker}:`, error);
+            return position;
+          }
+        })
+      );
+
+      setPositions(prev => prev.map(p => {
+        const updatedPos = updated.find(u => u.id === p.id);
+        return updatedPos || p;
+      }));
+    }
+  };
+
+  fetchNewPrices();
+}, [positions.length]); // Run when positions are added/removed
 
   const calculateMetrics = (position: Position) => {
     const totalCost = position.shares * position.avgCost;
