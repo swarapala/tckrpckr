@@ -9,7 +9,6 @@ interface Position {
   currentPrice: number;
 }
 
-
 const Portfolio: React.FC = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [newPosition, setNewPosition] = useState({
@@ -85,12 +84,12 @@ const Portfolio: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-semibold">Your Positions</h3>
           <button 
-  onClick={() => setShowAddModal(true)}
-  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
->
-  <Plus size={18} />
-  Add Position
-</button>
+            onClick={() => setShowAddModal(true)}
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+          >
+            <Plus size={18} />
+            Add Position
+          </button>
         </div>
 
         <div className="overflow-x-auto">
@@ -101,10 +100,11 @@ const Portfolio: React.FC = () => {
                 <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Shares</th>
                 <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Avg Cost</th>
                 <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Current Price</th>
-                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Total Value</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Total Cost</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Current Value</th>
                 <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Gain/Loss</th>
-                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Return</th>
-                <th className="text-center py-3 px-4 text-sm font-semibold text-slate-400">Action</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Return %</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -112,23 +112,26 @@ const Portfolio: React.FC = () => {
                 const metrics = calculateMetrics(position);
                 return (
                   <tr key={position.id} className="border-b border-slate-800 hover:bg-slate-800 transition-colors">
-                    <td className="py-4 px-4 font-semibold text-blue-400">{position.ticker}</td>
-                    <td className="py-4 px-4 text-right">{position.shares}</td>
-                    <td className="py-4 px-4 text-right">${position.avgCost.toFixed(2)}</td>
-                    <td className="py-4 px-4 text-right">${position.currentPrice.toFixed(2)}</td>
-                    <td className="py-4 px-4 text-right font-semibold">${metrics.currentValue.toFixed(2)}</td>
-                    <td className={`py-4 px-4 text-right font-semibold ${metrics.gainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    <td className="py-3 px-4">
+                      <span className="font-semibold text-blue-400">{position.ticker}</span>
+                    </td>
+                    <td className="text-right py-3 px-4">{position.shares}</td>
+                    <td className="text-right py-3 px-4">${position.avgCost.toFixed(2)}</td>
+                    <td className="text-right py-3 px-4">${position.currentPrice.toFixed(2)}</td>
+                    <td className="text-right py-3 px-4">${metrics.totalCost.toFixed(2)}</td>
+                    <td className="text-right py-3 px-4">${metrics.currentValue.toFixed(2)}</td>
+                    <td className={`text-right py-3 px-4 font-semibold ${metrics.gainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                       {metrics.gainLoss >= 0 ? '+' : ''}${metrics.gainLoss.toFixed(2)}
                     </td>
-                    <td className={`py-4 px-4 text-right font-semibold ${metrics.gainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    <td className={`text-right py-3 px-4 font-semibold ${metrics.gainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                       {metrics.gainLossPercent >= 0 ? '+' : ''}{metrics.gainLossPercent.toFixed(2)}%
                     </td>
-                    <td className="py-4 px-4 text-center">
+                    <td className="text-right py-3 px-4">
                       <button
                         onClick={() => deletePosition(position.id)}
-                        className="p-2 hover:bg-red-900/30 rounded-lg transition-colors"
+                        className="text-red-400 hover:text-red-300 transition-colors"
                       >
-                        <Trash2 size={16} className="text-red-400" />
+                        <Trash2 size={18} />
                       </button>
                     </td>
                   </tr>
@@ -136,32 +139,6 @@ const Portfolio: React.FC = () => {
               })}
             </tbody>
           </table>
-        </div>
-      </div>
-
-      {/* Allocation Chart */}
-      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
-        <h3 className="text-xl font-semibold mb-6">Portfolio Allocation</h3>
-        <div className="space-y-4">
-          {positions.map((position) => {
-            const value = position.shares * position.currentPrice;
-            const percentage = (value / portfolioValue) * 100;
-            
-            return (
-              <div key={position.id}>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-semibold">{position.ticker}</span>
-                  <span className="text-slate-400">{percentage.toFixed(1)}%</span>
-                </div>
-                <div className="w-full bg-slate-800 rounded-full h-3">
-                  <div
-                    className="bg-blue-600 h-3 rounded-full transition-all duration-500"
-                    style={{ width: `${percentage}%` }}
-                  ></div>
-                </div>
-              </div>
-            );
-          })}
         </div>
       </div>
 
@@ -213,7 +190,7 @@ const Portfolio: React.FC = () => {
                           ticker: newPosition.ticker,
                           shares: parseFloat(newPosition.shares),
                           avgCost: parseFloat(newPosition.avgCost),
-                          currentPrice: parseFloat(newPosition.avgCost), // Will be updated with real price
+                          currentPrice: parseFloat(newPosition.avgCost),
                         }
                       ]);
                       setNewPosition({ ticker: '', shares: '', avgCost: '' });
@@ -238,7 +215,6 @@ const Portfolio: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
     </div>
   );
 };
