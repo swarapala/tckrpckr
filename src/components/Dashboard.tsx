@@ -82,7 +82,10 @@ const Dashboard: React.FC = () => {
 
         <div className="p-4 border-t border-slate-800">
   <button 
-    onClick={() => setShowSettings(true)}
+    onClick={() => {
+  console.log('Settings clicked!');
+  setShowSettings(true);
+}}
     className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
   >
     <Settings size={20} />
