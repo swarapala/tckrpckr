@@ -34,6 +34,7 @@ const Screener: React.FC = () => {
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showColumnPicker, setShowColumnPicker] = useState(false);
   const [sortColumn, setSortColumn] = useState<ColumnKey>('ticker');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   
@@ -242,7 +243,6 @@ const Screener: React.FC = () => {
     a.click();
   };
 
-  const [showColumnPicker, setShowColumnPicker] = useState(false);
 
   if (loading) {
     return (
@@ -447,8 +447,67 @@ const Screener: React.FC = () => {
           </table>
         </div>
       </div>
-
-      {/* Keep your existing AI Summary section here */}
+              {/* AI Summary */}
+      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <span>🤖</span> AI Market Analysis
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <h4 className="text-lg font-semibold text-green-400 mb-3">📈 Top Opportunities</h4>
+            <ul className="space-y-2 text-sm">
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 mt-1">•</span>
+                <span><strong className="text-blue-400">NVDA</strong> - Strong upward momentum, trading near 52W high with high call volume</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 mt-1">•</span>
+                <span><strong className="text-blue-400">META</strong> - Positive earnings surprise, low P/E relative to sector</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 mt-1">•</span>
+                <span><strong className="text-blue-400">AMD</strong> - Consolidating at support, bullish option flow detected</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="text-lg font-semibold text-yellow-400 mb-3">👀 Watch List</h4>
+            <ul className="space-y-2 text-sm">
+              <li className="flex items-start gap-2">
+                <span className="text-yellow-400 mt-1">•</span>
+                <span><strong className="text-blue-400">TSLA</strong> - High volatility, wait for clearer direction</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-yellow-400 mt-1">•</span>
+                <span><strong className="text-blue-400">AAPL</strong> - Approaching resistance at $180, monitor for breakout</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-yellow-400 mt-1">•</span>
+                <span><strong className="text-blue-400">GOOGL</strong> - Sideways consolidation, potential accumulation phase</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="text-lg font-semibold text-red-400 mb-3">⚠️ Risk Alerts</h4>
+            <ul className="space-y-2 text-sm">
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 mt-1">•</span>
+                <span><strong className="text-blue-400">NFLX</strong> - Trading below 52W low, bearish trend intact</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 mt-1">•</span>
+                <span><strong className="text-blue-400">BA</strong> - High put/call ratio, negative sentiment</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 mt-1">•</span>
+                <span><strong className="text-blue-400">DIS</strong> - Elevated P/E, weakening fundamentals</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

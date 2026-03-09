@@ -12,6 +12,7 @@ type View = 'market' | 'analysis' | 'portfolio' | 'news' | 'chat' | 'screener';
 const Dashboard: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>('market');
   const [selectedTicker, setSelectedTicker] = useState<string>('AAPL');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navigationItems = [
     { id: 'market' as View, label: 'Market', icon: TrendingUp },
@@ -25,7 +26,31 @@ const Dashboard: React.FC = () => {
   return (
     <div className="flex h-screen bg-slate-950">
       {/* Sidebar */}
-      <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col">
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="lg:hidden fixed top-4 left-4 z-50 bg-slate-800 p-3 rounded-lg shadow-lg"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black/50 z-30"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className={`
+        fixed lg:relative inset-y-0 left-0 z-40
+        w-64 bg-slate-900 border-r border-slate-800 flex flex-col
+        transform transition-transform duration-300 ease-in-out
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
         <div className="p-6 border-b border-slate-800">
           <h1 className="text-2xl font-bold text-blue-400">TickPickV1</h1>
           <p className="text-xs text-slate-400 mt-1">Professional Market Analysis</p>
@@ -37,7 +62,10 @@ const Dashboard: React.FC = () => {
             return (
               <button
                 key={item.id}
-                onClick={() => setCurrentView(item.id)}
+                onClick={() => {
+                  setCurrentView(item.id);
+                  setSidebarOpen(false); // Close sidebar on mobile when item clicked
+                }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg mb-2 transition-colors ${
                   currentView === item.id
                     ? 'bg-blue-600 text-white'

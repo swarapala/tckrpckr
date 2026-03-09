@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Plus, TrendingUp, TrendingDown, Trash2 } from 'lucide-react';
+import { useEffect } from 'react';
+import { fetchStockQuote } from '../services/api';
 
 interface Position {
   id: string;
@@ -16,12 +18,38 @@ const Portfolio: React.FC = () => {
     shares: '',
     avgCost: '',
   });
+  const [editingPosition, setEditingPosition] = useState<Position | null>(null);
+
 
   const [positions, setPositions] = useState<Position[]>([
     { id: '1', ticker: 'AAPL', shares: 50, avgCost: 150.00, currentPrice: 175.50 },
     { id: '2', ticker: 'MSFT', shares: 30, avgCost: 350.00, currentPrice: 380.25 },
     { id: '3', ticker: 'GOOGL', shares: 20, avgCost: 135.00, currentPrice: 142.30 },
   ]);
+  // Fetch real-time prices
+useEffect(() => {
+  const updatePrices = async () => {
+    const updatedPositions = await Promise.all(
+      positions.map(async (position) => {
+        try {
+          const quote = await fetchStockQuote(position.ticker);
+          return {
+            ...position,
+            currentPrice: quote.price,
+          };
+        } catch (error) {
+          console.error(`Error fetching price for ${position.ticker}:`, error);
+          return position;
+        }
+      })
+    );
+    setPositions(updatedPositions);
+  };
+
+  updatePrices();
+  const interval = setInterval(updatePrices, 60000); // Update every minute
+  return () => clearInterval(interval);
+}, []);
 
   const calculateMetrics = (position: Position) => {
     const totalCost = position.shares * position.avgCost;
@@ -127,13 +155,23 @@ const Portfolio: React.FC = () => {
                       {metrics.gainLossPercent >= 0 ? '+' : ''}{metrics.gainLossPercent.toFixed(2)}%
                     </td>
                     <td className="text-right py-3 px-4">
-                      <button
-                        onClick={() => deletePosition(position.id)}
-                        className="text-red-400 hover:text-red-300 transition-colors"
-                      >
-                        <Trash2 size={18} />
-                      </button>
-                    </td>
+  <div className="flex gap-2 justify-end">
+    <button
+      onClick={() => setEditingPosition(position)}
+      className="text-blue-400 hover:text-blue-300 transition-colors"
+    >
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+      </svg>
+    </button>
+    <button
+      onClick={() => deletePosition(position.id)}
+      className="text-red-400 hover:text-red-300 transition-colors"
+    >
+      <Trash2 size={18} />
+    </button>
+  </div>
+</td>
                   </tr>
                 );
               })}
@@ -143,78 +181,101 @@ const Portfolio: React.FC = () => {
       </div>
 
       {/* Add Position Modal */}
-      {showAddModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-slate-900 rounded-xl p-6 max-w-md w-full border border-slate-800">
-            <h3 className="text-xl font-bold mb-4">Add New Position</h3>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">Ticker Symbol</label>
-                <input
-                  type="text"
-                  value={newPosition.ticker}
-                  onChange={(e) => setNewPosition({...newPosition, ticker: e.target.value.toUpperCase()})}
-                  placeholder="AAPL"
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">Number of Shares</label>
-                <input
-                  type="number"
-                  value={newPosition.shares}
-                  onChange={(e) => setNewPosition({...newPosition, shares: e.target.value})}
-                  placeholder="10"
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">Average Cost Per Share</label>
-                <input
-                  type="number"
-                  value={newPosition.avgCost}
-                  onChange={(e) => setNewPosition({...newPosition, avgCost: e.target.value})}
-                  placeholder="150.00"
-                  step="0.01"
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
-                />
-              </div>
-              <div className="flex gap-2 pt-4">
-                <button
-                  onClick={() => {
-                    if (newPosition.ticker && newPosition.shares && newPosition.avgCost) {
-                      setPositions([
-                        ...positions,
-                        {
-                          id: Date.now().toString(),
-                          ticker: newPosition.ticker,
-                          shares: parseFloat(newPosition.shares),
-                          avgCost: parseFloat(newPosition.avgCost),
-                          currentPrice: parseFloat(newPosition.avgCost),
-                        }
-                      ]);
-                      setNewPosition({ ticker: '', shares: '', avgCost: '' });
-                      setShowAddModal(false);
-                    }
-                  }}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-lg transition-colors"
-                >
-                  Add Position
-                </button>
-                <button
-                  onClick={() => {
-                    setShowAddModal(false);
-                    setNewPosition({ ticker: '', shares: '', avgCost: '' });
-                  }}
-                  className="flex-1 bg-slate-700 hover:bg-slate-600 py-2 rounded-lg transition-colors"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
+      {/* Add/Edit Position Modal */}
+{(showAddModal || editingPosition) && (
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div className="bg-slate-900 rounded-xl p-6 max-w-md w-full border border-slate-800">
+      <h3 className="text-xl font-bold mb-4">
+        {editingPosition ? 'Edit Position' : 'Add New Position'}
+      </h3>
+      <div className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium mb-2">Ticker Symbol</label>
+          <input
+            type="text"
+            value={editingPosition ? editingPosition.ticker : newPosition.ticker}
+            onChange={(e) => editingPosition 
+              ? setEditingPosition({...editingPosition, ticker: e.target.value.toUpperCase()})
+              : setNewPosition({...newPosition, ticker: e.target.value.toUpperCase()})
+            }
+            placeholder="AAPL"
+            disabled={!!editingPosition}
+            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 disabled:opacity-50"
+          />
         </div>
-      )}
+        <div>
+          <label className="block text-sm font-medium mb-2">Number of Shares</label>
+          <input
+            type="number"
+            value={editingPosition ? editingPosition.shares : newPosition.shares}
+            onChange={(e) => editingPosition
+              ? setEditingPosition({...editingPosition, shares: parseFloat(e.target.value) || 0})
+              : setNewPosition({...newPosition, shares: e.target.value})
+            }
+            placeholder="10"
+            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-2">Average Cost Per Share</label>
+          <input
+            type="number"
+            value={editingPosition ? editingPosition.avgCost : newPosition.avgCost}
+            onChange={(e) => editingPosition
+              ? setEditingPosition({...editingPosition, avgCost: parseFloat(e.target.value) || 0})
+              : setNewPosition({...newPosition, avgCost: e.target.value})
+            }
+            placeholder="150.00"
+            step="0.01"
+            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <div className="flex gap-2 pt-4">
+          <button
+            onClick={() => {
+              if (editingPosition) {
+                // Update existing position
+                setPositions(positions.map(p => 
+                  p.id === editingPosition.id ? editingPosition : p
+                ));
+                setEditingPosition(null);
+              } else {
+                // Add new position
+                if (newPosition.ticker && newPosition.shares && newPosition.avgCost) {
+                  setPositions([
+                    ...positions,
+                    {
+                      id: Date.now().toString(),
+                      ticker: newPosition.ticker,
+                      shares: parseFloat(newPosition.shares),
+                      avgCost: parseFloat(newPosition.avgCost),
+                      currentPrice: parseFloat(newPosition.avgCost),
+                    }
+                  ]);
+                  setNewPosition({ ticker: '', shares: '', avgCost: '' });
+                  setShowAddModal(false);
+                }
+              }
+            }}
+            className="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-lg transition-colors"
+          >
+            {editingPosition ? 'Save Changes' : 'Add Position'}
+          </button>
+          <button
+            onClick={() => {
+              setShowAddModal(false);
+              setEditingPosition(null);
+              setNewPosition({ ticker: '', shares: '', avgCost: '' });
+            }}
+            className="flex-1 bg-slate-700 hover:bg-slate-600 py-2 rounded-lg transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 };
