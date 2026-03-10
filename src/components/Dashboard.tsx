@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Settings from './Settings';
-import { TrendingUp, BarChart3, BookOpen, MessageSquare, Settings as SettingsIcon, Search, Bell, Filter } from 'lucide-react';import MarketOverview from './MarketOverview';
-import StockAnalysis from './StockAnalysis';
+import { TrendingUp, BarChart3, BookOpen, MessageSquare, Settings as SettingsIcon, Search, Bell, Filter } from 'lucide-react';
+import MarketOverview from './MarketOverview';import StockAnalysis from './StockAnalysis';
 import Portfolio from './Portfolio';
 import News from './News';
 import ChatBot from './ChatBot';
@@ -52,7 +52,10 @@ const Dashboard: React.FC = () => {
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         <div className="p-6 border-b border-slate-800">
-          <h1 className="text-2xl font-bold text-blue-400">tckrpckr</h1>
+          <h1 className="text-2xl font-bold">
+            <span className="text-green-400">tckr</span>
+            <span className="text-red-400">pckr</span>
+          </h1>
           <p className="text-xs text-slate-400 mt-1">AI-Powered Stock Analysis</p>
         </div>
         
@@ -141,8 +144,22 @@ const Dashboard: React.FC = () => {
           {currentView === 'screener' && <Screener />}
           {currentView === 'settings' && <Settings />}
         </div>
+        
+        {/* Footer */}
+        <footer className="border-t border-slate-800 bg-slate-900 px-6 py-4">
+          <div className="flex items-center justify-between text-sm text-slate-400">
+            <div className="flex items-center gap-4">
+              <span>© 2026 <span className="text-green-400">tckr</span><span className="text-red-400">pckr</span></span>              <span className="text-slate-600">•</span>
+              <span>v1.0.0 Beta</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <a href="#" className="hover:text-slate-200 transition-colors">Terms</a>
+              <a href="#" className="hover:text-slate-200 transition-colors">Privacy</a>
+              <a href="https://github.com/swarapala/tickpickv1" target="_blank" rel="noopener noreferrer" className="hover:text-slate-200 transition-colors">GitHub</a>
+            </div>
+          </div>
+        </footer>
       </main>
-      
     </div>
   );
 };

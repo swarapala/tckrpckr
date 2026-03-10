@@ -21,8 +21,11 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <TrendingUp size={48} className="text-blue-400" />
-            <h1 className="text-4xl font-bold text-blue-400 mb-2">tckrpckr</h1>
-          </div>
+            <h1 className="text-4xl font-bold mb-2">
+              <span className="text-green-400">tckr</span>
+              <span className="text-red-400">pckr</span>
+            </h1>          
+            </div>
           <p className="text-slate-400">
             AI-powered stock analysis and insights at your fingertips
           </p>
