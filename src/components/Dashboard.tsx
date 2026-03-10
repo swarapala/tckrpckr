@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Settings from './Settings';
-import { TrendingUp, BarChart3, BookOpen, MessageSquare, Settings, Search, Bell, Filter } from 'lucide-react';
-import MarketOverview from './MarketOverview';
+import { TrendingUp, BarChart3, BookOpen, MessageSquare, Settings as SettingsIcon, Search, Bell, Filter } from 'lucide-react';import MarketOverview from './MarketOverview';
 import StockAnalysis from './StockAnalysis';
 import Portfolio from './Portfolio';
 import News from './News';
@@ -85,7 +84,7 @@ const Dashboard: React.FC = () => {
             onClick={() => setCurrentView('settings')}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
           >
-            <Settings size={20} />
+            <SettingsIcon size={20} />
             <span className="font-medium">Settings</span>
           </button>
         </div>
