@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, TrendingUp, TrendingDown, Trash2 } from 'lucide-react';
 import { fetchStockQuote } from '../services/api';
-import { fetchStockQuote } from '../services/api';
 
 interface Position {
   id: string;
