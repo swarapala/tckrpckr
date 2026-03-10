@@ -5,6 +5,9 @@ import MarketOverview from './MarketOverview';
 import News from './News';
 import ChatBot from './ChatBot';
 import Screener from './Screener';
+import StockAnalysis from './StockAnalysis';
+import Portfolio from './Portfolio';
+
 
 type View = 'market' | 'analysis' | 'portfolio' | 'news' | 'chat' | 'screener' | 'settings';
 const Dashboard: React.FC = () => {
