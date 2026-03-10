@@ -98,8 +98,7 @@ const Settings: React.FC = () => {
 
       {/* About */}
       <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
-        <h2 className="text-xl font-semibold mb-4">About TickPickV1</h2>
-        <div className="space-y-3 text-sm">
+        <h2 className="text-xl font-semibold mb-4">About tckrpckr</h2>        <div className="space-y-3 text-sm">
           <div className="flex justify-between p-3 bg-slate-800 rounded-lg">
             <span className="text-slate-400">Version</span>
             <span className="font-medium">1.0.0 Beta</span>

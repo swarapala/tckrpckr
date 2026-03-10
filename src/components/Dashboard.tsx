@@ -52,8 +52,8 @@ const Dashboard: React.FC = () => {
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         <div className="p-6 border-b border-slate-800">
-          <h1 className="text-2xl font-bold text-blue-400">TickPickV1</h1>
-          <p className="text-xs text-slate-400 mt-1">Professional Market Analysis</p>
+          <h1 className="text-2xl font-bold text-blue-400">tckrpckr</h1>
+          <p className="text-xs text-slate-400 mt-1">AI-Powered Stock Analysis</p>
         </div>
         
         <nav className="flex-1 p-4">
