@@ -102,7 +102,7 @@ const StockChart: React.FC<StockChartProps> = ({ data, ticker }) => {
           {showSMA && data.sma20 && (
             <div className="flex justify-between gap-4">
               <span className="text-white/60">SMA20:</span>
-              <span className="text-blue-400">${data.sma20.toFixed(2)}</span>
+              <span className="text-white/80">${data.sma20.toFixed(2)}</span>
             </div>
           )}
           {showSMA && data.sma50 && (

@@ -38,7 +38,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-green-500/50 focus:ring-2 focus:ring-green-500/20 transition-all text-white placeholder:text-white/30"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-emerald-600/50 focus:ring-2 focus:ring-emerald-600/20 transition-all text-white placeholder:text-white/30"
                 placeholder="demo@tckrpckr.com"
               />
             </div>
@@ -51,7 +51,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-green-500/50 focus:ring-2 focus:ring-green-500/20 transition-all text-white placeholder:text-white/30"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-emerald-600/50 focus:ring-2 focus:ring-emerald-600/20 transition-all text-white placeholder:text-white/30"
                 placeholder="••••••••"
               />
             </div>

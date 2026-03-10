@@ -82,7 +82,7 @@ const ChatBot: React.FC = () => {
       {/* Header */}
       <div className="bg-black rounded-xl p-6 border border-white/10">
         <h2 className="text-3xl font-bold flex items-center gap-3 mb-2">
-          <Sparkles className="text-blue-400" />
+          <Sparkles className="text-white/80" />
           AI Financial Assistant
         </h2>
         <p className="text-white/60">
@@ -103,7 +103,7 @@ const ChatBot: React.FC = () => {
               <div
                 className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
                   message.role === 'user'
-                    ? 'bg-green-600'
+                    ? 'bg-emerald-700'
                     : 'bg-gradient-to-br from-purple-600 to-blue-600'
                 }`}
               >
@@ -118,7 +118,7 @@ const ChatBot: React.FC = () => {
                 <div
                   className={`inline-block rounded-2xl px-6 py-4 ${
                     message.role === 'user'
-                      ? 'bg-green-600 text-white'
+                      ? 'bg-emerald-700 text-white'
                       : 'bg-white/5 text-slate-100'
                   }`}
                 >
@@ -127,13 +127,13 @@ const ChatBot: React.FC = () => {
                       <ReactMarkdown
                         components={{
                           p: ({children}) => <p className="mb-3 last:mb-0 leading-relaxed">{children}</p>,
-                          strong: ({children}) => <strong className="text-blue-300 font-semibold">{children}</strong>,
+                          strong: ({children}) => <strong className="text-white/70 font-semibold">{children}</strong>,
                           em: ({children}) => <em className="text-purple-300">{children}</em>,
                           ul: ({children}) => <ul className="list-disc ml-4 mb-3 space-y-1">{children}</ul>,
                           ol: ({children}) => <ol className="list-decimal ml-4 mb-3 space-y-1">{children}</ol>,
                           li: ({children}) => <li className="leading-relaxed">{children}</li>,
                           code: ({children}) => (
-                            <code className="bg-white/10 px-2 py-0.5 rounded text-blue-300 text-sm font-mono">
+                            <code className="bg-white/10 px-2 py-0.5 rounded text-white/70 text-sm font-mono">
                               {children}
                             </code>
                           ),
@@ -142,8 +142,8 @@ const ChatBot: React.FC = () => {
                               {children}
                             </pre>
                           ),
-                          h1: ({children}) => <h1 className="text-xl font-bold mb-2 text-blue-300">{children}</h1>,
-                          h2: ({children}) => <h2 className="text-lg font-bold mb-2 text-blue-300">{children}</h2>,
+                          h1: ({children}) => <h1 className="text-xl font-bold mb-2 text-white/70">{children}</h1>,
+                          h2: ({children}) => <h2 className="text-lg font-bold mb-2 text-white/70">{children}</h2>,
                           h3: ({children}) => <h3 className="text-base font-bold mb-2 text-purple-300">{children}</h3>,
                           blockquote: ({children}) => (
                             <blockquote className="border-l-4 border-blue-500 pl-4 italic my-3 text-white/80">
@@ -228,7 +228,7 @@ const ChatBot: React.FC = () => {
             <button
               onClick={handleSend}
               disabled={!input.trim() || isLoading}
-              className="bg-green-600 hover:bg-blue-700 disabled:bg-white/10 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2"
+              className="bg-emerald-700 hover:bg-blue-700 disabled:bg-white/10 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2"
             >
               <Send size={18} />
             </button>

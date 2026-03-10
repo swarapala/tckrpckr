@@ -17,7 +17,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ ticker }) => {
     return (
       <div className="bg-black rounded-xl p-6 border border-white/10">
         <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-          <Sparkles className="text-blue-400" />
+          <Sparkles className="text-white/80" />
           AI-Powered Recommendations
         </h3>
         <div className="flex items-center justify-center h-48">
@@ -47,7 +47,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ ticker }) => {
   return (
     <div className="bg-black rounded-xl p-6 border border-white/10">
       <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
-        <Sparkles className="text-blue-400" />
+        <Sparkles className="text-white/80" />
         AI-Powered Recommendations
       </h3>
 
@@ -95,7 +95,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ ticker }) => {
                   </div>
                   <div>
                     <div className="text-white/60 text-xs">Similarity</div>
-                    <div className="font-semibold text-blue-400">
+                    <div className="font-semibold text-white/80">
                       {(stock.similarity * 100).toFixed(0)}%
                     </div>
                   </div>
@@ -138,7 +138,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ ticker }) => {
                 </div>
                 <div className="text-right">
                   <div className="text-sm text-white/60">Weight</div>
-                  <div className="text-lg font-semibold text-blue-400">
+                  <div className="text-lg font-semibold text-white/80">
                     {suggestion.recommendedWeight}%
                   </div>
                 </div>
@@ -152,13 +152,13 @@ const Recommendations: React.FC<RecommendationsProps> = ({ ticker }) => {
       {recommendations?.insights && (
         <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 rounded-lg p-6 border border-blue-800/50">
           <h4 className="text-lg font-semibold mb-3 flex items-center gap-2">
-            <TrendingUp size={18} className="text-blue-400" />
+            <TrendingUp size={18} className="text-white/80" />
             AI Investment Insights
           </h4>
           <div className="space-y-4">
             {recommendations.insights.map((insight: any, idx: number) => (
               <div key={idx} className="flex gap-3">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-600 flex items-center justify-center text-xs font-bold">
+                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-700 flex items-center justify-center text-xs font-bold">
                   {idx + 1}
                 </div>
                 <div className="flex-1">

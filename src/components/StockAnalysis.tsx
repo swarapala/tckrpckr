@@ -103,7 +103,7 @@ const StockAnalysis: React.FC<StockAnalysisProps> = ({ ticker, onTickerChange })
                 onClick={() => setTimeRange(range)}
                 className={`px-3 py-1 rounded-lg text-sm transition-colors ${
                   timeRange === range
-                    ? 'bg-green-600 text-white'
+                    ? 'bg-emerald-700 text-white'
                     : 'bg-white/5 text-white/60 hover:bg-white/10'
                 }`}
               >

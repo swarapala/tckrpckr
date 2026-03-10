@@ -60,7 +60,7 @@ const News: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold flex items-center gap-3">
-            <Newspaper className="text-blue-400" />
+            <Newspaper className="text-white/80" />
             Market News
           </h2>
           <p className="text-white/60 mt-2">
@@ -72,7 +72,7 @@ const News: React.FC = () => {
     onClick={() => setSelectedTicker(undefined)}
     className={`px-4 py-2 rounded-lg transition-colors ${
       !selectedTicker
-        ? 'bg-green-600 text-white'
+        ? 'bg-emerald-700 text-white'
         : 'bg-white/5 text-white/60 hover:bg-white/10'
     }`}
   >
@@ -90,7 +90,7 @@ const News: React.FC = () => {
       const input = document.getElementById('tickerFilter') as HTMLInputElement;
       setSelectedTicker(input.value.toUpperCase() || undefined);
     }}
-    className="bg-green-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm transition-colors"
+    className="bg-emerald-700 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm transition-colors"
   >
     Filter
   </button>
@@ -108,7 +108,7 @@ const News: React.FC = () => {
               <div className="flex items-start gap-4">
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-xl font-semibold hover:text-blue-400 transition-colors">
+                    <h3 className="text-xl font-semibold hover:text-white/80 transition-colors">
                       {article.title}
                     </h3>
                     {getSentimentBadge(article.sentiment)}
@@ -130,7 +130,7 @@ const News: React.FC = () => {
                         {article.tickers.map((ticker: string) => (
                           <span
                             key={ticker}
-                            className="px-3 py-1 bg-white/5 rounded-full text-sm font-semibold text-blue-400 hover:bg-white/10 transition-colors"
+                            className="px-3 py-1 bg-white/5 rounded-full text-sm font-semibold text-white/80 hover:bg-white/10 transition-colors"
                           >
                             {ticker}
                           </span>

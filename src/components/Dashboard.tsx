@@ -24,8 +24,7 @@ const Dashboard: React.FC = () => {
   ];
 
   return (
-<div className="flex h-screen bg-black">      {/* Sidebar */}
-      {/* Mobile Menu Button */}
+<div className="flex h-screen bg-gradient-to-br from-emerald-950 via-black to-emerald-950">      {/* Mobile Menu Button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
         className="lg:hidden fixed top-4 left-4 z-50 bg-white/5 p-3 rounded-lg shadow-lg"
@@ -69,10 +68,10 @@ const Dashboard: React.FC = () => {
                   setSidebarOpen(false); // Close sidebar on mobile when item clicked
                 }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg mb-2 transition-colors ${
-                  currentView === item.id
-                    ? 'bg-green-600 text-white'
-                    : 'text-white/60 hover:bg-white/5 hover:text-white/90'
-                }`}
+  currentView === item.id
+    ? 'bg-emerald-800 text-white border border-emerald-700'
+    : 'text-white/60 hover:bg-white/5 hover:text-white/90'
+}`}
               >
                 <Icon size={20} />
                 <span className="font-medium">{item.label}</span>

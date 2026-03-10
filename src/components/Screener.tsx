@@ -283,7 +283,7 @@ const Screener: React.FC = () => {
           </button>
           <button
             onClick={exportToCSV}
-            className="flex items-center gap-2 bg-green-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-emerald-700 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
           >
             <Download size={18} />
             Export CSV
@@ -327,7 +327,7 @@ const Screener: React.FC = () => {
       {/* Filters */}
       <div className="bg-black rounded-xl p-6 border border-white/10">
         <div className="flex items-center gap-2 mb-4">
-          <Filter size={18} className="text-blue-400" />
+          <Filter size={18} className="text-white/80" />
           <h3 className="text-lg font-semibold">Filters</h3>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -424,7 +424,7 @@ const Screener: React.FC = () => {
                   {Array.from(visibleColumns).map(column => (
                     <td key={column} className="px-4 py-3 text-sm">
                       {column === 'ticker' ? (
-                        <span className="font-semibold text-blue-400">{stock[column]}</span>
+                        <span className="font-semibold text-white/80">{stock[column]}</span>
                       ) : (
                         <span className={
                           column === 'currentToHigh' && stock[column]! < 0.7 ? 'text-red-400 font-semibold' :
@@ -458,15 +458,15 @@ const Screener: React.FC = () => {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-1">•</span>
-                <span><strong className="text-blue-400">NVDA</strong> - Strong upward momentum, trading near 52W high with high call volume</span>
+                <span><strong className="text-white/80">NVDA</strong> - Strong upward momentum, trading near 52W high with high call volume</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-1">•</span>
-                <span><strong className="text-blue-400">META</strong> - Positive earnings surprise, low P/E relative to sector</span>
+                <span><strong className="text-white/80">META</strong> - Positive earnings surprise, low P/E relative to sector</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-1">•</span>
-                <span><strong className="text-blue-400">AMD</strong> - Consolidating at support, bullish option flow detected</span>
+                <span><strong className="text-white/80">AMD</strong> - Consolidating at support, bullish option flow detected</span>
               </li>
             </ul>
           </div>
@@ -476,15 +476,15 @@ const Screener: React.FC = () => {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400 mt-1">•</span>
-                <span><strong className="text-blue-400">TSLA</strong> - High volatility, wait for clearer direction</span>
+                <span><strong className="text-white/80">TSLA</strong> - High volatility, wait for clearer direction</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400 mt-1">•</span>
-                <span><strong className="text-blue-400">AAPL</strong> - Approaching resistance at $180, monitor for breakout</span>
+                <span><strong className="text-white/80">AAPL</strong> - Approaching resistance at $180, monitor for breakout</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400 mt-1">•</span>
-                <span><strong className="text-blue-400">GOOGL</strong> - Sideways consolidation, potential accumulation phase</span>
+                <span><strong className="text-white/80">GOOGL</strong> - Sideways consolidation, potential accumulation phase</span>
               </li>
             </ul>
           </div>
@@ -494,15 +494,15 @@ const Screener: React.FC = () => {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-red-400 mt-1">•</span>
-                <span><strong className="text-blue-400">NFLX</strong> - Trading below 52W low, bearish trend intact</span>
+                <span><strong className="text-white/80">NFLX</strong> - Trading below 52W low, bearish trend intact</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400 mt-1">•</span>
-                <span><strong className="text-blue-400">BA</strong> - High put/call ratio, negative sentiment</span>
+                <span><strong className="text-white/80">BA</strong> - High put/call ratio, negative sentiment</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400 mt-1">•</span>
-                <span><strong className="text-blue-400">DIS</strong> - Elevated P/E, weakening fundamentals</span>
+                <span><strong className="text-white/80">DIS</strong> - Elevated P/E, weakening fundamentals</span>
               </li>
             </ul>
           </div>

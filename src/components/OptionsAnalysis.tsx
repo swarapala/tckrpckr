@@ -71,7 +71,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
   const getRecommendationBadge = (recommendation: string) => {
     const config = {
       excellent: { bg: 'bg-green-900', text: 'text-green-400', icon: CheckCircle },
-      good: { bg: 'bg-blue-900', text: 'text-blue-400', icon: CheckCircle },
+      good: { bg: 'bg-blue-900', text: 'text-white/80', icon: CheckCircle },
       fair: { bg: 'bg-yellow-900', text: 'text-yellow-400', icon: AlertCircle },
       poor: { bg: 'bg-red-900', text: 'text-red-400', icon: AlertCircle },
     };
@@ -95,7 +95,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
             onClick={() => setOptionType('calls')}
             className={`px-4 py-2 rounded-lg text-sm transition-colors flex items-center gap-2 ${
               optionType === 'calls'
-                ? 'bg-green-600 text-white'
+                ? 'bg-emerald-700 text-white'
                 : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
           >
@@ -129,7 +129,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <div className="text-2xl font-bold text-blue-400">
+                  <div className="text-2xl font-bold text-white/80">
                     ${option.strike}
                   </div>
                   {getRecommendationBadge(option.recommendation)}
@@ -194,7 +194,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
                     <div
                       className={`h-2 rounded-full ${
                         option.score >= 70
-                          ? 'bg-green-500'
+                          ? 'bg-emerald-600'
                           : option.score >= 50
                           ? 'bg-blue-500'
                           : option.score >= 30
@@ -214,7 +214,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
 
       <div className="mt-6 p-4 bg-white/5 rounded-lg border border-white/15">
         <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
-          <AlertCircle size={16} className="text-blue-400" />
+          <AlertCircle size={16} className="text-white/80" />
           Analysis Criteria
         </h4>
         <ul className="text-xs text-white/60 space-y-1">

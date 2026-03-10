@@ -58,8 +58,8 @@ const MarketOverview: React.FC = () => {
   };
 
   const sectorPerformance = [
-    { name: 'Technology', change: 1.2, color: 'bg-green-500' },
-    { name: 'Healthcare', change: 0.8, color: 'bg-green-400' },
+    { name: 'Technology', change: 1.2, color: 'bg-emerald-600' },
+    { name: 'Healthcare', change: 0.8, color: 'bg-emerald-500' },
     { name: 'Financials', change: 0.5, color: 'bg-green-300' },
     { name: 'Consumer Discretionary', change: -0.3, color: 'bg-red-300' },
     { name: 'Energy', change: -0.7, color: 'bg-red-400' },
@@ -164,7 +164,7 @@ const MarketOverview: React.FC = () => {
       {/* Sector Performance */}
       <div className="bg-black rounded-xl p-6 border border-white/10">
         <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-          <Activity className="text-blue-400" />
+          <Activity className="text-white/80" />
           Sector Performance
         </h3>
         <div className="space-y-4">
