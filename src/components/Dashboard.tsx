@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Settings from './Settings';
 import { TrendingUp, BarChart3, BookOpen, MessageSquare, Settings, Search, Bell, Filter } from 'lucide-react';
 import MarketOverview from './MarketOverview';
 import StockAnalysis from './StockAnalysis';
@@ -7,14 +8,13 @@ import News from './News';
 import ChatBot from './ChatBot';
 import Screener from './Screener';
 
-type View = 'market' | 'analysis' | 'portfolio' | 'news' | 'chat' | 'screener';
-
+type View = 'market' | 'analysis' | 'portfolio' | 'news' | 'chat' | 'screener' | 'settings';
 const Dashboard: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>('market');
   const [selectedTicker, setSelectedTicker] = useState<string>('AAPL');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [showSettings, setShowSettings] = useState(true);
-  
+  const [showSettings, setShowSettings] = useState(false);
+
   const navigationItems = [
     { id: 'market' as View, label: 'Market', icon: TrendingUp },
     { id: 'analysis' as View, label: 'Analysis', icon: BarChart3 },
@@ -82,13 +82,7 @@ const Dashboard: React.FC = () => {
 
        <div className="p-4 border-t border-slate-800">
           <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              alert('Settings clicked!');
-              setShowSettings(true);
-            }}
+            onClick={() => setCurrentView('settings')}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
           >
             <Settings size={20} />
@@ -146,111 +140,10 @@ const Dashboard: React.FC = () => {
           {currentView === 'news' && <News />}
           {currentView === 'chat' && <ChatBot />}
           {currentView === 'screener' && <Screener />}
+          {currentView === 'settings' && <Settings />}
         </div>
       </main>
-      {/* Settings Modal */}
-      {showSettings && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-slate-900 rounded-xl p-6 max-w-2xl w-full mx-4 border border-slate-800">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold">Settings</h2>
-              <button
-                onClick={() => setShowSettings(false)}
-                className="text-slate-400 hover:text-slate-200"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            <div className="space-y-6">
-              {/* Account Section */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Account</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-4 bg-slate-800 rounded-lg">
-                    <div>
-                      <div className="font-medium">Plan</div>
-                      <div className="text-sm text-slate-400">Free Trial</div>
-                    </div>
-                    <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm transition-colors">
-                      Upgrade to Pro
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Preferences Section */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Preferences</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-4 bg-slate-800 rounded-lg">
-                    <div>
-                      <div className="font-medium">Real-time Updates</div>
-                      <div className="text-sm text-slate-400">Refresh portfolio every 60 seconds</div>
-                    </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                    </label>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 bg-slate-800 rounded-lg">
-                    <div>
-                      <div className="font-medium">Price Alerts</div>
-                      <div className="text-sm text-slate-400">Get notified on significant price changes</div>
-                    </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" defaultChecked className="sr-only peer" />
-                      <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              {/* API Keys Section */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4">API Configuration</h3>
-                <div className="space-y-3">
-                  <div className="p-4 bg-slate-800 rounded-lg">
-                    <div className="font-medium mb-2">Alpaca API</div>
-                    <div className="text-sm text-green-400">✓ Connected</div>
-                  </div>
-                  <div className="p-4 bg-slate-800 rounded-lg">
-                    <div className="font-medium mb-2">Claude AI</div>
-                    <div className="text-sm text-green-400">✓ Connected</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* About Section */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4">About</h3>
-                <div className="p-4 bg-slate-800 rounded-lg space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Version</span>
-                    <span>1.0.0 Beta</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Last Updated</span>
-                    <span>March 8, 2026</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 pt-6 border-t border-slate-800">
-              <button
-                onClick={() => setShowSettings(false)}
-                className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg transition-colors"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 };
