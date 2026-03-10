@@ -57,12 +57,12 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
             </div>
 
             <button
-              type="button"
-              onClick={() => onLogin()}
-              className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-green-500/20"
-            >
-              Enter Demo
-            </button>
+  type="button"
+  onClick={() => onLogin()}
+  className="w-full bg-slate-100 hover:bg-white text-slate-900 font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+>
+  Enter Demo
+</button>
           </form>
 
           <div className="mt-6 text-center">
