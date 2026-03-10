@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { TrendingUp } from 'lucide-react';
 
 interface AuthProps {
   onLogin: () => void;
 }
 
 const Auth: React.FC<AuthProps> = ({ onLogin }) => {
-  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,121 +14,85 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 p-4">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
+        {/* Logo and Title */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <TrendingUp size={48} className="text-blue-400" />
-            <h1 className="text-4xl font-bold mb-2">
-              <span className="text-green-400">tckr</span>
-              <span className="text-red-400">pckr</span>
-            </h1>          
-            </div>
-          <p className="text-slate-400">
-            AI-powered stock analysis and insights at your fingertips
-          </p>
+          <h1 className="text-5xl font-bold mb-3">
+            <span className="text-green-400">tckr</span>
+            <span className="text-red-400">pckr</span>
+          </h1>
+          <p className="text-slate-400 text-lg">AI-Powered Stock Analysis</p>
         </div>
 
-        <div className="bg-slate-900 rounded-2xl p-8 border border-slate-800">
-          <div className="flex gap-2 mb-6">
-            <button
-              onClick={() => setIsLogin(true)}
-              className={`flex-1 py-2 px-4 rounded-lg font-semibold transition-colors ${
-                isLogin
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-              }`}
-            >
-              Login
-            </button>
-            <button
-              onClick={() => setIsLogin(false)}
-              className={`flex-1 py-2 px-4 rounded-lg font-semibold transition-colors ${
-                !isLogin
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-              }`}
-            >
-              Create Account
-            </button>
-          </div>
-
-              <form onSubmit={(e) => { e.preventDefault(); onLogin(); }} className="space-y-6">
-              <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
+        {/* Login Card */}
+        <div className="bg-slate-900 rounded-2xl p-8 border border-slate-800 shadow-2xl">
+          <h2 className="text-2xl font-bold mb-6 text-center">Welcome Back</h2>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Email
+              </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                placeholder="(optional)"
+                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all"
+                placeholder="demo@tckrpckr.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Password</label>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Password
+              </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                placeholder="(optional)"
+                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all"
+                placeholder="••••••••"
               />
             </div>
-
-            {isLogin && (
-              <div className="flex items-center justify-between text-sm">
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded" />
-                  <span className="text-slate-400">Remember me</span>
-                </label>
-                <a href="#" className="text-blue-400 hover:text-blue-300">
-                  Forgot password?
-                </a>
-              </div>
-            )}
 
             <button
               type="button"
               onClick={() => onLogin()}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors"
+              className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-green-500/20"
             >
               Enter Demo
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-slate-400">
-            {isLogin ? (
-              <p>
-                Don't have an account?{' '}
-                <button
-                  onClick={() => setIsLogin(false)}
-                  className="text-blue-400 hover:text-blue-300 font-semibold"
-                >
-                  Create one for free
-                </button>
-              </p>
-            ) : (
-              <p>
-                Already have an account?{' '}
-                <button
-                  onClick={() => setIsLogin(true)}
-                  className="text-blue-400 hover:text-blue-300 font-semibold"
-                >
-                  Login here
-                </button>
-              </p>
-            )}
+          <div className="mt-6 text-center">
+            <p className="text-sm text-slate-500">
+              Demo mode • No authentication required
+            </p>
           </div>
         </div>
 
+        {/* Features */}
         <div className="mt-8 text-center">
-          <div className="text-sm text-slate-400 mb-4">Start your free trial today</div>
           <div className="flex items-center justify-center gap-6 text-sm text-slate-500">
-            <div>✓ Real-time market data</div>
-            <div>✓ AI-powered insights</div>
-            <div>✓ No credit card required</div>
+            <div className="flex items-center gap-2">
+              <span className="text-green-400">✓</span>
+              <span>Real-time data</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-green-400">✓</span>
+              <span>AI insights</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-green-400">✓</span>
+              <span>Free forever</span>
+            </div>
           </div>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center mt-8 text-sm text-slate-500">
+          <p>© 2026 <span className="text-green-400">tckr</span><span className="text-red-400">pckr</span></p>
         </div>
       </div>
     </div>
