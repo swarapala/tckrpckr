@@ -26,7 +26,6 @@ const StockAnalysis: React.FC<StockAnalysisProps> = ({ ticker, onTickerChange })
   });
 
   const timeRanges = ['1D', '5D', '1M', '3M', '6M', 'YTD', '1Y', '5Y'];
-
   const isPositive = quote?.change && quote.change > 0;
   const changePercent = quote?.changePercent ? (quote.changePercent * 100).toFixed(2) : '0.00';
 
@@ -40,12 +39,16 @@ const StockAnalysis: React.FC<StockAnalysisProps> = ({ ticker, onTickerChange })
   ];
 
   if (quoteLoading || dataLoading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+  return (
+    <div className="flex items-center justify-center h-full">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto mb-4"></div>
+        <p className="text-xl text-slate-300">Loading {ticker} data...</p>
+        <p className="text-sm text-slate-500 mt-2">Fetching real-time stock information...</p>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   return (
     <div className="space-y-6">
