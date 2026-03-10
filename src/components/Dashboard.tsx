@@ -151,7 +151,7 @@ const Dashboard: React.FC = () => {
           <div className="flex items-center justify-between text-sm text-white/60">
             <div className="flex items-center gap-4">
               <span>© 2026 <span className="text-green-400">tckr</span><span className="text-red-400">pckr</span></span>              
-              <span className="text-slate-40">•</span>
+              <span className="text-white/40">•</span>
               <span>v1.0.0 Beta</span>
             </div>
             <div className="flex items-center gap-4">
