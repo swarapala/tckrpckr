@@ -1,13 +1,48 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown, Activity } from 'lucide-react';
+import { fetchStockQuote } from '../services/api';
 
 const MarketOverview: React.FC = () => {
-  const indices = [
-    { name: 'S&P 500', symbol: 'SPY', price: 4783.35, change: 23.45, changePercent: 0.49 },
-    { name: 'Dow Jones', symbol: 'DIA', price: 37305.16, change: -45.22, changePercent: -0.12 },
-    { name: 'Nasdaq', symbol: 'QQQ', price: 16685.97, change: 156.37, changePercent: 0.95 },
-    { name: 'Russell 2000', symbol: 'IWM', price: 2027.07, change: 8.12, changePercent: 0.40 },
-  ];
+  const [indices, setIndices] = useState([
+    { name: 'S&P 500', symbol: 'SPY', price: 0, change: 0, changePercent: 0 },
+    { name: 'Dow Jones', symbol: 'DIA', price: 0, change: 0, changePercent: 0 },
+    { name: 'Nasdaq', symbol: 'QQQ', price: 0, change: 0, changePercent: 0 },
+    { name: 'Russell 2000', symbol: 'IWM', price: 0, change: 0, changePercent: 0 },
+  ]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadIndices = async () => {
+      setLoading(true);
+      try {
+        const symbols = ['SPY', 'DIA', 'QQQ', 'IWM'];
+        const names = ['S&P 500', 'Dow Jones', 'Nasdaq', 'Russell 2000'];
+        
+        const data = await Promise.all(
+          symbols.map(symbol => fetchStockQuote(symbol))
+        );
+        
+        const updatedIndices = data.map((quote, idx) => ({
+          name: names[idx],
+          symbol: symbols[idx],
+          price: quote.price || 0,
+          change: quote.change || 0,
+          changePercent: (quote.changePercent || 0) * 100,
+        }));
+        
+        setIndices(updatedIndices);
+      } catch (error) {
+        console.error('Error loading indices:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadIndices();
+    const interval = setInterval(loadIndices, 60000); // Update every minute
+    return () => clearInterval(interval);
+  }, []);
 
   const topMovers = {
     gainers: [
@@ -35,7 +70,10 @@ const MarketOverview: React.FC = () => {
     <div className="space-y-6">
       {/* Major Indices */}
       <div>
-        <h2 className="text-2xl font-bold mb-4">Major Indices</h2>
+        <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
+          Major Indices
+          {loading && <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>}
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {indices.map((index) => (
             <div

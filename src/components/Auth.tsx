@@ -60,7 +60,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                placeholder="demo@tickpick.com (optional)"
+                placeholder="(optional)"
               />
             </div>
 
@@ -71,7 +71,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                placeholder="demo123 (optional)"
+                placeholder="(optional)"
               />
             </div>
 
