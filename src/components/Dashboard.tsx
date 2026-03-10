@@ -119,8 +119,8 @@ const Dashboard: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600"></div>
               <div className="text-sm">
-                <div className="font-medium">Pro User</div>
-                <div className="text-xs text-slate-400">Free Trial</div>
+                <div className="font-medium">Demo User</div>
+                <div className="text-xs text-slate-400">Swara Palanivel</div>
               </div>
             </div>
           </div>
