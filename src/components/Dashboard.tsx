@@ -13,8 +13,8 @@ const Dashboard: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>('market');
   const [selectedTicker, setSelectedTicker] = useState<string>('AAPL');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-
+  const [showSettings, setShowSettings] = useState(true);
+  
   const navigationItems = [
     { id: 'market' as View, label: 'Market', icon: TrendingUp },
     { id: 'analysis' as View, label: 'Analysis', icon: BarChart3 },
