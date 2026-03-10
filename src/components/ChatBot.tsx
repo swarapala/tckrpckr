@@ -104,7 +104,7 @@ const ChatBot: React.FC = () => {
                 className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
                   message.role === 'user'
                     ? 'bg-emerald-700'
-                    : 'bg-gradient-to-br from-purple-600 to-blue-600'
+                    : 'bg-gradient-to-br from-emerald-800 to-emerald-900'
                 }`}
               >
                 {message.role === 'user' ? <User size={20} /> : <Bot size={20} />}
@@ -146,7 +146,7 @@ const ChatBot: React.FC = () => {
                           h2: ({children}) => <h2 className="text-lg font-bold mb-2 text-white/70">{children}</h2>,
                           h3: ({children}) => <h3 className="text-base font-bold mb-2 text-purple-300">{children}</h3>,
                           blockquote: ({children}) => (
-                            <blockquote className="border-l-4 border-blue-500 pl-4 italic my-3 text-white/80">
+                            <blockquote className="border-l-4 border-emerald-600 pl-4 italic my-3 text-white/80">
                               {children}
                             </blockquote>
                           ),
@@ -171,18 +171,18 @@ const ChatBot: React.FC = () => {
 
           {isLoading && (
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-emerald-800 flex items-center justify-center">
                 <Bot size={20} />
               </div>
               <div className="bg-white/5 rounded-2xl px-6 py-4">
                 <div className="flex gap-2 items-center">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
                   <div
-                    className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                    className="w-2 h-2 bg-white rounded-full animate-bounce"
                     style={{ animationDelay: '0.2s' }}
                   ></div>
                   <div
-                    className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                    className="w-2 h-2 bg-white rounded-full animate-bounce"
                     style={{ animationDelay: '0.4s' }}
                   ></div>
                   <span className="ml-2 text-sm text-white/60">Thinking...</span>
@@ -196,7 +196,7 @@ const ChatBot: React.FC = () => {
 
         {/* Quick Questions */}
         {messages.length === 1 && (
-          <div className="border-t border-white/10 p-4 bg-slate-850">
+          <div className="border-t border-white/10 p-4 bg-black">
             <div className="text-sm text-white/60 mb-3">💡 Quick questions to get started:</div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {quickQuestions.map((question, idx) => (
@@ -214,7 +214,7 @@ const ChatBot: React.FC = () => {
         )}
 
         {/* Input Area */}
-        <div className="border-t border-white/10 p-4 bg-slate-850">
+        <div className="border-t border-white/10 p-4 bg-black">
           <div className="flex gap-2">
             <input
               type="text"
@@ -222,13 +222,13 @@ const ChatBot: React.FC = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
               placeholder="💬 Ask about stocks, market trends, or investing strategies..."
-              className="flex-1 bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="flex-1 bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
               disabled={isLoading}
             />
             <button
               onClick={handleSend}
               disabled={!input.trim() || isLoading}
-              className="bg-emerald-700 hover:bg-blue-700 disabled:bg-white/10 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2"
+              className="bg-emerald-700 hover:bg-emerald-800 disabled:bg-white/10 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2"
             >
               <Send size={18} />
             </button>

@@ -248,7 +248,7 @@ const Screener: React.FC = () => {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-600 mx-auto mb-4"></div>
           <p className="text-xl text-white/80">Loading NYSE stocks...</p>
           <p className="text-sm text-slate-500 mt-2">Fetching real-time data for 100+ stocks</p>
         </div>
@@ -283,7 +283,7 @@ const Screener: React.FC = () => {
           </button>
           <button
             onClick={exportToCSV}
-            className="flex items-center gap-2 bg-emerald-700 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 px-4 py-2 rounded-lg transition-colors"
           >
             <Download size={18} />
             Export CSV
@@ -341,7 +341,7 @@ const Screener: React.FC = () => {
                 onChange={(e) => setSearchTerm(e.target.value.toUpperCase())}
                 placeholder="Ticker..."
                 autoComplete="off"
-                className="w-full bg-white/5 border border-white/15 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                className="w-full bg-white/5 border border-white/15 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
               />
             </div>
           </div>
@@ -352,7 +352,7 @@ const Screener: React.FC = () => {
               value={filters.minPrice}
               onChange={(e) => setFilters({...filters, minPrice: e.target.value})}
               placeholder="$0"
-              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-emerald-600"
             />
           </div>
           <div>
@@ -362,7 +362,7 @@ const Screener: React.FC = () => {
               value={filters.maxPrice}
               onChange={(e) => setFilters({...filters, maxPrice: e.target.value})}
               placeholder="$1000"
-              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-emerald-600"
             />
           </div>
           <div>
@@ -372,7 +372,7 @@ const Screener: React.FC = () => {
               value={filters.minPE}
               onChange={(e) => setFilters({...filters, minPE: e.target.value})}
               placeholder="0"
-              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-emerald-600"
             />
           </div>
           <div>
@@ -382,7 +382,7 @@ const Screener: React.FC = () => {
               value={filters.maxPE}
               onChange={(e) => setFilters({...filters, maxPE: e.target.value})}
               placeholder="100"
-              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-emerald-600"
             />
           </div>
         </div>
@@ -418,7 +418,7 @@ const Screener: React.FC = () => {
                 <tr
                   key={stock.ticker}
                   className={`border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer ${
-                    idx % 2 === 0 ? 'bg-black' : 'bg-slate-850'
+                    idx % 2 === 0 ? 'bg-black' : 'bg-black'
                   }`}
                 >
                   {Array.from(visibleColumns).map(column => (

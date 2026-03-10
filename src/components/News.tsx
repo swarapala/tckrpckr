@@ -49,7 +49,7 @@ const News: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
       </div>
     );
   }
@@ -83,14 +83,14 @@ const News: React.FC = () => {
     id="tickerFilter"
     placeholder="Filter by ticker..."
     autoComplete="off"
-    className="bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+    className="bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
   />
   <button
     onClick={() => {
       const input = document.getElementById('tickerFilter') as HTMLInputElement;
       setSelectedTicker(input.value.toUpperCase() || undefined);
     }}
-    className="bg-emerald-700 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm transition-colors"
+    className="bg-emerald-700 hover:bg-emerald-800 px-4 py-2 rounded-lg text-sm transition-colors"
   >
     Filter
   </button>
@@ -152,7 +152,7 @@ const News: React.FC = () => {
       </div>
 
       {/* AI Summary Section */}
-      <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 rounded-xl p-6 border border-blue-800/50">
+      <div className="bg-black rounded-xl p-6 border border-white/20/50">
         <h3 className="text-lg font-semibold mb-4">AI Market Summary</h3>
         <p className="text-white/80 leading-relaxed">
           Today's market showed mixed signals with technology stocks leading gains while healthcare

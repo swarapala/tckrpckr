@@ -59,7 +59,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
       <div className="bg-black rounded-xl p-6 border border-white/10">
         <h3 className="text-xl font-semibold mb-4">Options Analysis</h3>
         <div className="flex items-center justify-center h-48">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
         </div>
       </div>
     );
@@ -71,7 +71,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
   const getRecommendationBadge = (recommendation: string) => {
     const config = {
       excellent: { bg: 'bg-green-900', text: 'text-green-400', icon: CheckCircle },
-      good: { bg: 'bg-blue-900', text: 'text-white/80', icon: CheckCircle },
+      good: { bg: 'bg-black', text: 'text-white/80', icon: CheckCircle },
       fair: { bg: 'bg-yellow-900', text: 'text-yellow-400', icon: AlertCircle },
       poor: { bg: 'bg-red-900', text: 'text-red-400', icon: AlertCircle },
     };
@@ -125,7 +125,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
           {sweetSpots.map((option, idx) => (
             <div
               key={`${option.strike}-${option.expiration}`}
-              className="bg-white/5 rounded-lg p-5 hover:bg-slate-750 transition-colors"
+              className="bg-white/5 rounded-lg p-5 hover:bg-white/10 transition-colors"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
@@ -196,7 +196,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
                         option.score >= 70
                           ? 'bg-emerald-600'
                           : option.score >= 50
-                          ? 'bg-blue-500'
+                          ? 'bg-emerald-600'
                           : option.score >= 30
                           ? 'bg-yellow-500'
                           : 'bg-red-500'

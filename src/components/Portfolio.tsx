@@ -145,7 +145,7 @@ useEffect(() => {
           <h3 className="text-xl font-semibold">Your Positions</h3>
           <button 
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-2 bg-emerald-700 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg transition-colors"
           >
             <Plus size={18} />
             Add Position
@@ -232,7 +232,7 @@ useEffect(() => {
             }
             placeholder="AAPL"
             disabled={!!editingPosition}
-            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 disabled:opacity-50"
+            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-600 disabled:opacity-50"
           />
         </div>
         <div>
@@ -245,7 +245,7 @@ useEffect(() => {
               : setNewPosition({...newPosition, shares: e.target.value})
             }
             placeholder="10"
-            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-600"
           />
         </div>
         <div>
@@ -259,7 +259,7 @@ useEffect(() => {
             }
             placeholder="150.00"
             step="0.01"
-            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-600"
           />
         </div>
         <div className="flex gap-2 pt-4">
@@ -289,7 +289,7 @@ useEffect(() => {
                 }
               }
             }}
-            className="flex-1 bg-emerald-700 hover:bg-blue-700 py-2 rounded-lg transition-colors"
+            className="flex-1 bg-emerald-700 hover:bg-emerald-800 py-2 rounded-lg transition-colors"
           >
             {editingPosition ? 'Save Changes' : 'Add Position'}
           </button>
@@ -299,7 +299,7 @@ useEffect(() => {
               setEditingPosition(null);
               setNewPosition({ ticker: '', shares: '', avgCost: '' });
             }}
-            className="flex-1 bg-white/10 hover:bg-slate-600 py-2 rounded-lg transition-colors"
+            className="flex-1 bg-white/10 hover:bg-white/20 py-2 rounded-lg transition-colors"
           >
             Cancel
           </button>

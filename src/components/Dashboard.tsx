@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Settings from './Settings';
 import { TrendingUp, BarChart3, BookOpen, MessageSquare, Settings as SettingsIcon, Search, Bell, Filter } from 'lucide-react';
-import MarketOverview from './MarketOverview';import StockAnalysis from './StockAnalysis';
-import Portfolio from './Portfolio';
+import MarketOverview from './MarketOverview';
 import News from './News';
 import ChatBot from './ChatBot';
 import Screener from './Screener';
@@ -24,8 +23,7 @@ const Dashboard: React.FC = () => {
   ];
 
   return (
-<div className="flex h-screen bg-gradient-to-br from-emerald-950 via-black to-emerald-950">      {/* Mobile Menu Button */}
-      <button
+<div className="flex h-screen" style={{ background: 'linear-gradient(135deg, #021008 0%, #000000 50%, #021008 100%)' }}>      <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
         className="lg:hidden fixed top-4 left-4 z-50 bg-white/5 p-3 rounded-lg shadow-lg"
       >
@@ -43,12 +41,15 @@ const Dashboard: React.FC = () => {
       )}
 
       {/* Sidebar */}
-      <aside className={`
-        fixed lg:relative inset-y-0 left-0 z-40
-        w-64 bg-black border-r border-white/10 flex flex-col
-        transform transition-transform duration-300 ease-in-out
-        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-      `}>
+      <aside 
+  className={`
+    fixed lg:relative inset-y-0 left-0 z-40
+    w-64 border-r border-white/10 flex flex-col
+    transform transition-transform duration-300 ease-in-out
+    ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+  `}
+  style={{ background: '#021008' }}
+>
         <div className="p-6 border-b border-white/10">
           <h1 className="text-2xl font-bold">
             <span className="text-green-400">tckr</span>
@@ -69,8 +70,8 @@ const Dashboard: React.FC = () => {
                 }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg mb-2 transition-colors ${
   currentView === item.id
-    ? 'bg-emerald-800 text-white border border-emerald-700'
-    : 'text-white/60 hover:bg-white/5 hover:text-white/90'
+    ? 'bg-black text-white border border-white/30'
+    : 'text-white/60 hover:bg-black/50 hover:text-white/90'
 }`}
               >
                 <Icon size={20} />
@@ -94,13 +95,13 @@ const Dashboard: React.FC = () => {
       {/* Main Content */}
       <main className="flex-1 overflow-hidden flex flex-col">
         {/* Top Bar */}
-        <header className="h-16 bg-black border-b border-white/10 flex items-center justify-between px-6">
+<header className="h-16 border-b border-white/10 flex items-center justify-between px-6" style={{ background: '#021008' }}>
           <div className="flex items-center gap-4 flex-1 max-w-2xl">
             <Search className="text-white/60" size={20} />
             <input
               type="text"
               placeholder="Search stocks, ETFs, or ask a question..."
-              className="flex-1 bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="flex-1 bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
               onKeyPress={(e) => {
                 if (e.key === 'Enter') {
                   const value = e.currentTarget.value.toUpperCase();
@@ -115,11 +116,10 @@ const Dashboard: React.FC = () => {
           <div className="flex items-center gap-4">
             <button className="relative p-2 hover:bg-white/5 rounded-lg transition-colors">
               <Bell size={20} className="text-white/60" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full"></span>
+              <span className="absolute top-1 right-1 w-2 h-2 bg-emerald-600 rounded-full"></span>
             </button>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600"></div>
-              <div className="text-sm">
+<div className="w-8 h-8 rounded-full bg-white/20"></div>              <div className="text-sm">
                 <div className="font-medium">Swara Palanivel</div>
                 <div className="text-xs text-white/60">demo platform</div>
               </div>
@@ -147,7 +147,8 @@ const Dashboard: React.FC = () => {
         <footer className="border-t border-white/10 bg-black px-6 py-4">
           <div className="flex items-center justify-between text-sm text-white/60">
             <div className="flex items-center gap-4">
-              <span>© 2026 <span className="text-green-400">tckr</span><span className="text-red-400">pckr</span></span>              <span className="text-slate-600">•</span>
+              <span>© 2026 <span className="text-green-400">tckr</span><span className="text-red-400">pckr</span></span>              
+              <span className="text-slate-40">•</span>
               <span>v1.0.0 Beta</span>
             </div>
             <div className="flex items-center gap-4">

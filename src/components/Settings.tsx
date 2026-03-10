@@ -18,7 +18,7 @@ const Settings: React.FC = () => {
               <div className="font-medium">Plan</div>
               <div className="text-sm text-white/60">Free Trial</div>
             </div>
-            <button className="bg-emerald-700 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm transition-colors">
+            <button className="bg-emerald-700 hover:bg-emerald-800 px-4 py-2 rounded-lg text-sm transition-colors">
               Upgrade to Pro
             </button>
           </div>

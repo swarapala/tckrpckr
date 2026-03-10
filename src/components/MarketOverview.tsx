@@ -72,7 +72,7 @@ const MarketOverview: React.FC = () => {
       <div>
         <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
           Major Indices
-          {loading && <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>}
+          {loading && <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-emerald-600"></div>}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {indices.map((index) => (
@@ -116,7 +116,7 @@ const MarketOverview: React.FC = () => {
             {topMovers.gainers.map((stock) => (
               <div
                 key={stock.symbol}
-                className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-slate-750 transition-colors"
+                className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
               >
                 <div>
                   <div className="font-semibold">{stock.symbol}</div>
@@ -143,7 +143,7 @@ const MarketOverview: React.FC = () => {
             {topMovers.losers.map((stock) => (
               <div
                 key={stock.symbol}
-                className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-slate-750 transition-colors"
+                className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
               >
                 <div>
                   <div className="font-semibold">{stock.symbol}</div>
@@ -189,7 +189,7 @@ const MarketOverview: React.FC = () => {
                     left: sector.change >= 0 ? '50%' : `${50 - Math.abs(sector.change) * 10}%`,
                   }}
                 ></div>
-                <div className="absolute left-1/2 top-0 w-px h-2 bg-slate-600"></div>
+                <div className="absolute left-1/2 top-0 w-px h-2 bg-white/20"></div>
               </div>
             </div>
           ))}
