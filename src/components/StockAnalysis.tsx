@@ -43,7 +43,7 @@ const StockAnalysis: React.FC<StockAnalysisProps> = ({ ticker, onTickerChange })
     <div className="flex items-center justify-center h-full">
       <div className="text-center">
         <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto mb-4"></div>
-        <p className="text-xl text-slate-300">Loading {ticker} data...</p>
+        <p className="text-xl text-white/80">Loading {ticker} data...</p>
         <p className="text-sm text-slate-500 mt-2">Fetching real-time stock information...</p>
       </div>
     </div>
@@ -53,16 +53,16 @@ const StockAnalysis: React.FC<StockAnalysisProps> = ({ ticker, onTickerChange })
   return (
     <div className="space-y-6">
       {/* Stock Header */}
-      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+      <div className="bg-black rounded-xl p-6 border border-white/10">
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-4">
               <h2 className="text-3xl font-bold">{ticker}</h2>
-              <span className="px-3 py-1 bg-slate-800 rounded-full text-sm text-slate-300">
+              <span className="px-3 py-1 bg-white/5 rounded-full text-sm text-white/80">
                 {quote?.exchange || 'NASDAQ'}
               </span>
             </div>
-            <p className="text-slate-400 mt-1">{quote?.name || 'Loading...'}</p>
+            <p className="text-white/60 mt-1">{quote?.name || 'Loading...'}</p>
           </div>
           <div className="text-right">
             <div className="text-3xl font-bold">${quote?.price?.toFixed(2) || '0.00'}</div>
@@ -80,8 +80,8 @@ const StockAnalysis: React.FC<StockAnalysisProps> = ({ ticker, onTickerChange })
           {metrics.map((metric) => {
             const Icon = metric.icon;
             return (
-              <div key={metric.label} className="bg-slate-800 rounded-lg p-4">
-                <div className="flex items-center gap-2 text-slate-400 mb-2">
+              <div key={metric.label} className="bg-white/5 rounded-lg p-4">
+                <div className="flex items-center gap-2 text-white/60 mb-2">
                   <Icon size={16} />
                   <span className="text-xs">{metric.label}</span>
                 </div>
@@ -93,7 +93,7 @@ const StockAnalysis: React.FC<StockAnalysisProps> = ({ ticker, onTickerChange })
       </div>
 
       {/* Chart Section */}
-      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+      <div className="bg-black rounded-xl p-6 border border-white/10">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-semibold">Price Chart</h3>
           <div className="flex gap-2">
@@ -103,8 +103,8 @@ const StockAnalysis: React.FC<StockAnalysisProps> = ({ ticker, onTickerChange })
                 onClick={() => setTimeRange(range)}
                 className={`px-3 py-1 rounded-lg text-sm transition-colors ${
                   timeRange === range
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                    ? 'bg-green-600 text-white'
+                    : 'bg-white/5 text-white/60 hover:bg-white/10'
                 }`}
               >
                 {range}

@@ -84,41 +84,41 @@ const StockChart: React.FC<StockChartProps> = ({ data, ticker }) => {
 
     const data = payload[0].payload;
     return (
-      <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 shadow-xl">
-        <p className="text-sm text-slate-400 mb-2">{data.displayDate}</p>
+      <div className="bg-white/5 border border-white/15 rounded-lg p-4 shadow-xl">
+        <p className="text-sm text-white/60 mb-2">{data.displayDate}</p>
         <div className="space-y-1 text-sm">
           <div className="flex justify-between gap-4">
-            <span className="text-slate-400">Close:</span>
+            <span className="text-white/60">Close:</span>
             <span className="font-semibold">${data.close.toFixed(2)}</span>
           </div>
           <div className="flex justify-between gap-4">
-            <span className="text-slate-400">High:</span>
+            <span className="text-white/60">High:</span>
             <span className="text-green-400">${data.high.toFixed(2)}</span>
           </div>
           <div className="flex justify-between gap-4">
-            <span className="text-slate-400">Low:</span>
+            <span className="text-white/60">Low:</span>
             <span className="text-red-400">${data.low.toFixed(2)}</span>
           </div>
           {showSMA && data.sma20 && (
             <div className="flex justify-between gap-4">
-              <span className="text-slate-400">SMA20:</span>
+              <span className="text-white/60">SMA20:</span>
               <span className="text-blue-400">${data.sma20.toFixed(2)}</span>
             </div>
           )}
           {showSMA && data.sma50 && (
             <div className="flex justify-between gap-4">
-              <span className="text-slate-400">SMA50:</span>
+              <span className="text-white/60">SMA50:</span>
               <span className="text-purple-400">${data.sma50.toFixed(2)}</span>
             </div>
           )}
           {showBollinger && data.bollingerUpper && (
             <>
               <div className="flex justify-between gap-4">
-                <span className="text-slate-400">BB Upper:</span>
+                <span className="text-white/60">BB Upper:</span>
                 <span className="text-orange-400">${data.bollingerUpper.toFixed(2)}</span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-slate-400">BB Lower:</span>
+                <span className="text-white/60">BB Lower:</span>
                 <span className="text-cyan-400">${data.bollingerLower.toFixed(2)}</span>
               </div>
             </>
@@ -130,7 +130,7 @@ const StockChart: React.FC<StockChartProps> = ({ data, ticker }) => {
 
   if (!chartData || chartData.length === 0) {
     return (
-      <div className="flex items-center justify-center h-96 text-slate-400">
+      <div className="flex items-center justify-center h-96 text-white/60">
         No chart data available
       </div>
     );
@@ -139,21 +139,21 @@ const StockChart: React.FC<StockChartProps> = ({ data, ticker }) => {
   return (
     <div className="space-y-4">
       <div className="flex gap-4">
-        <label className="flex items-center gap-2 text-sm text-slate-300 cursor-pointer">
+        <label className="flex items-center gap-2 text-sm text-white/80 cursor-pointer">
           <input
             type="checkbox"
             checked={showBollinger}
             onChange={(e) => setShowBollinger(e.target.checked)}
-            className="w-4 h-4 rounded border-slate-600 bg-slate-800"
+            className="w-4 h-4 rounded border-slate-600 bg-white/5"
           />
           Bollinger Bands
         </label>
-        <label className="flex items-center gap-2 text-sm text-slate-300 cursor-pointer">
+        <label className="flex items-center gap-2 text-sm text-white/80 cursor-pointer">
           <input
             type="checkbox"
             checked={showSMA}
             onChange={(e) => setShowSMA(e.target.checked)}
-            className="w-4 h-4 rounded border-slate-600 bg-slate-800"
+            className="w-4 h-4 rounded border-slate-600 bg-white/5"
           />
           Moving Averages
         </label>

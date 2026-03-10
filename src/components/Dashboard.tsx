@@ -28,7 +28,7 @@ const Dashboard: React.FC = () => {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 bg-slate-800 p-3 rounded-lg shadow-lg"
+        className="lg:hidden fixed top-4 left-4 z-50 bg-white/5 p-3 rounded-lg shadow-lg"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -50,12 +50,12 @@ const Dashboard: React.FC = () => {
         transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
-        <div className="p-6 border-b border-slate-800">
+        <div className="p-6 border-b border-white/10">
           <h1 className="text-2xl font-bold">
             <span className="text-green-400">tckr</span>
             <span className="text-red-400">pckr</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">AI-Powered Stock Analysis</p>
+          <p className="text-xs text-white/60 mt-1">AI-Powered Stock Analysis</p>
         </div>
         
         <nav className="flex-1 p-4">
@@ -70,8 +70,8 @@ const Dashboard: React.FC = () => {
                 }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg mb-2 transition-colors ${
                   currentView === item.id
-                    ? 'bg-blue-600 text-white'
-                    : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+                    ? 'bg-green-600 text-white'
+                    : 'text-white/60 hover:bg-white/5 hover:text-white/90'
                 }`}
               >
                 <Icon size={20} />
@@ -81,10 +81,10 @@ const Dashboard: React.FC = () => {
           })}
         </nav>
 
-       <div className="p-4 border-t border-slate-800">
+       <div className="p-4 border-t border-white/10">
           <button
             onClick={() => setCurrentView('settings')}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-white/60 hover:bg-white/5 hover:text-white/90 transition-colors"
           >
             <SettingsIcon size={20} />
             <span className="font-medium">Settings</span>
@@ -97,11 +97,11 @@ const Dashboard: React.FC = () => {
         {/* Top Bar */}
         <header className="h-16 bg-black border-b border-white/10 flex items-center justify-between px-6">
           <div className="flex items-center gap-4 flex-1 max-w-2xl">
-            <Search className="text-slate-400" size={20} />
+            <Search className="text-white/60" size={20} />
             <input
               type="text"
               placeholder="Search stocks, ETFs, or ask a question..."
-              className="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="flex-1 bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               onKeyPress={(e) => {
                 if (e.key === 'Enter') {
                   const value = e.currentTarget.value.toUpperCase();
@@ -114,15 +114,15 @@ const Dashboard: React.FC = () => {
             />
           </div>
           <div className="flex items-center gap-4">
-            <button className="relative p-2 hover:bg-slate-800 rounded-lg transition-colors">
-              <Bell size={20} className="text-slate-400" />
+            <button className="relative p-2 hover:bg-white/5 rounded-lg transition-colors">
+              <Bell size={20} className="text-white/60" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full"></span>
             </button>
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600"></div>
               <div className="text-sm">
                 <div className="font-medium">Swara Palanivel</div>
-                <div className="text-xs text-slate-400">demo platform</div>
+                <div className="text-xs text-white/60">demo platform</div>
               </div>
             </div>
           </div>
@@ -146,15 +146,15 @@ const Dashboard: React.FC = () => {
         
         {/* Footer */}
         <footer className="border-t border-white/10 bg-black px-6 py-4">
-          <div className="flex items-center justify-between text-sm text-slate-400">
+          <div className="flex items-center justify-between text-sm text-white/60">
             <div className="flex items-center gap-4">
               <span>© 2026 <span className="text-green-400">tckr</span><span className="text-red-400">pckr</span></span>              <span className="text-slate-600">•</span>
               <span>v1.0.0 Beta</span>
             </div>
             <div className="flex items-center gap-4">
-              <a href="#" className="hover:text-slate-200 transition-colors">Terms</a>
-              <a href="#" className="hover:text-slate-200 transition-colors">Privacy</a>
-              <a href="https://github.com/swarapala/tickpickv1" target="_blank" rel="noopener noreferrer" className="hover:text-slate-200 transition-colors">GitHub</a>
+              <a href="#" className="hover:text-white/90 transition-colors">Terms</a>
+              <a href="#" className="hover:text-white/90 transition-colors">Privacy</a>
+              <a href="https://github.com/swarapala/tickpickv1" target="_blank" rel="noopener noreferrer" className="hover:text-white/90 transition-colors">GitHub</a>
             </div>
           </div>
         </footer>

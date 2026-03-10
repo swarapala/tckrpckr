@@ -78,11 +78,11 @@ const MarketOverview: React.FC = () => {
           {indices.map((index) => (
             <div
               key={index.symbol}
-              className="bg-slate-900 rounded-xl p-6 border border-slate-800 hover:border-slate-700 transition-colors"
+              className="bg-black rounded-xl p-6 border border-white/10 hover:border-white/15 transition-colors"
             >
               <div className="flex items-center justify-between mb-2">
-                <div className="text-sm text-slate-400">{index.name}</div>
-                <span className="px-2 py-1 bg-slate-800 rounded text-xs font-semibold">
+                <div className="text-sm text-white/60">{index.name}</div>
+                <span className="px-2 py-1 bg-white/5 rounded text-xs font-semibold">
                   {index.symbol}
                 </span>
               </div>
@@ -107,7 +107,7 @@ const MarketOverview: React.FC = () => {
       {/* Top Movers */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Gainers */}
-        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+        <div className="bg-black rounded-xl p-6 border border-white/10">
           <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <TrendingUp className="text-green-400" />
             Top Gainers
@@ -116,11 +116,11 @@ const MarketOverview: React.FC = () => {
             {topMovers.gainers.map((stock) => (
               <div
                 key={stock.symbol}
-                className="flex items-center justify-between p-3 bg-slate-800 rounded-lg hover:bg-slate-750 transition-colors"
+                className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-slate-750 transition-colors"
               >
                 <div>
                   <div className="font-semibold">{stock.symbol}</div>
-                  <div className="text-sm text-slate-400">{stock.name}</div>
+                  <div className="text-sm text-white/60">{stock.name}</div>
                 </div>
                 <div className="text-right">
                   <div className="font-semibold">${stock.price.toFixed(2)}</div>
@@ -134,7 +134,7 @@ const MarketOverview: React.FC = () => {
         </div>
 
         {/* Losers */}
-        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+        <div className="bg-black rounded-xl p-6 border border-white/10">
           <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <TrendingDown className="text-red-400" />
             Top Losers
@@ -143,11 +143,11 @@ const MarketOverview: React.FC = () => {
             {topMovers.losers.map((stock) => (
               <div
                 key={stock.symbol}
-                className="flex items-center justify-between p-3 bg-slate-800 rounded-lg hover:bg-slate-750 transition-colors"
+                className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-slate-750 transition-colors"
               >
                 <div>
                   <div className="font-semibold">{stock.symbol}</div>
-                  <div className="text-sm text-slate-400">{stock.name}</div>
+                  <div className="text-sm text-white/60">{stock.name}</div>
                 </div>
                 <div className="text-right">
                   <div className="font-semibold">${stock.price.toFixed(2)}</div>
@@ -162,7 +162,7 @@ const MarketOverview: React.FC = () => {
       </div>
 
       {/* Sector Performance */}
-      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+      <div className="bg-black rounded-xl p-6 border border-white/10">
         <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
           <Activity className="text-blue-400" />
           Sector Performance
@@ -181,7 +181,7 @@ const MarketOverview: React.FC = () => {
                   {sector.change.toFixed(2)}%
                 </span>
               </div>
-              <div className="relative w-full bg-slate-800 rounded-full h-2">
+              <div className="relative w-full bg-white/5 rounded-full h-2">
                 <div
                   className={`absolute h-2 rounded-full ${sector.color} transition-all duration-500`}
                   style={{
@@ -198,20 +198,20 @@ const MarketOverview: React.FC = () => {
 
       {/* Market Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
-          <div className="text-sm text-slate-400 mb-2">Market Breadth</div>
+        <div className="bg-black rounded-xl p-6 border border-white/10">
+          <div className="text-sm text-white/60 mb-2">Market Breadth</div>
           <div className="text-2xl font-bold mb-1">52% Bullish</div>
           <div className="text-sm text-green-400">1,456 advancing, 1,342 declining</div>
         </div>
-        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
-          <div className="text-sm text-slate-400 mb-2">VIX (Fear Index)</div>
+        <div className="bg-black rounded-xl p-6 border border-white/10">
+          <div className="text-sm text-white/60 mb-2">VIX (Fear Index)</div>
           <div className="text-2xl font-bold mb-1">14.23</div>
           <div className="text-sm text-green-400">-0.45 (-3.07%)</div>
         </div>
-        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
-          <div className="text-sm text-slate-400 mb-2">Put/Call Ratio</div>
+        <div className="bg-black rounded-xl p-6 border border-white/10">
+          <div className="text-sm text-white/60 mb-2">Put/Call Ratio</div>
           <div className="text-2xl font-bold mb-1">0.87</div>
-          <div className="text-sm text-slate-400">Neutral sentiment</div>
+          <div className="text-sm text-white/60">Neutral sentiment</div>
         </div>
       </div>
     </div>

@@ -249,7 +249,7 @@ const Screener: React.FC = () => {
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-xl text-slate-300">Loading NYSE stocks...</p>
+          <p className="text-xl text-white/80">Loading NYSE stocks...</p>
           <p className="text-sm text-slate-500 mt-2">Fetching real-time data for 100+ stocks</p>
         </div>
       </div>
@@ -262,28 +262,28 @@ const Screener: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold">Advanced Stock Screener</h2>
-          <p className="text-slate-400 mt-2">
+          <p className="text-white/60 mt-2">
             {filteredAndSortedStocks.length} stocks | Real-time NYSE data
           </p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={loadStocks}
-            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg transition-colors"
           >
             <RefreshCw size={18} />
             Refresh
           </button>
           <button
             onClick={() => setShowColumnPicker(!showColumnPicker)}
-            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg transition-colors"
           >
             <Eye size={18} />
             Columns
           </button>
           <button
             onClick={exportToCSV}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-green-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
           >
             <Download size={18} />
             Export CSV
@@ -293,7 +293,7 @@ const Screener: React.FC = () => {
 
       {/* Column Picker */}
       {showColumnPicker && (
-        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+        <div className="bg-black rounded-xl p-6 border border-white/10">
           <h3 className="text-lg font-semibold mb-4">Customize Columns</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(
@@ -304,7 +304,7 @@ const Screener: React.FC = () => {
               }, {} as Record<string, typeof allColumns>)
             ).map(([category, cols]) => (
               <div key={category}>
-                <div className="text-sm font-semibold text-slate-400 mb-2">{category}</div>
+                <div className="text-sm font-semibold text-white/60 mb-2">{category}</div>
                 <div className="space-y-2">
                   {cols.map(col => (
                     <label key={col.key} className="flex items-center gap-2 cursor-pointer">
@@ -325,74 +325,74 @@ const Screener: React.FC = () => {
       )}
 
       {/* Filters */}
-      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+      <div className="bg-black rounded-xl p-6 border border-white/10">
         <div className="flex items-center gap-2 mb-4">
           <Filter size={18} className="text-blue-400" />
           <h3 className="text-lg font-semibold">Filters</h3>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           <div>
-            <label className="block text-sm text-slate-400 mb-2">Search</label>
+            <label className="block text-sm text-white/60 mb-2">Search</label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none" size={16} />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value.toUpperCase())}
                 placeholder="Ticker..."
                 autoComplete="off"
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                className="w-full bg-white/5 border border-white/15 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm text-slate-400 mb-2">Min Price</label>
+            <label className="block text-sm text-white/60 mb-2">Min Price</label>
             <input
               type="number"
               value={filters.minPrice}
               onChange={(e) => setFilters({...filters, minPrice: e.target.value})}
               placeholder="$0"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label className="block text-sm text-slate-400 mb-2">Max Price</label>
+            <label className="block text-sm text-white/60 mb-2">Max Price</label>
             <input
               type="number"
               value={filters.maxPrice}
               onChange={(e) => setFilters({...filters, maxPrice: e.target.value})}
               placeholder="$1000"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label className="block text-sm text-slate-400 mb-2">Min P/E</label>
+            <label className="block text-sm text-white/60 mb-2">Min P/E</label>
             <input
               type="number"
               value={filters.minPE}
               onChange={(e) => setFilters({...filters, minPE: e.target.value})}
               placeholder="0"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label className="block text-sm text-slate-400 mb-2">Max P/E</label>
+            <label className="block text-sm text-white/60 mb-2">Max P/E</label>
             <input
               type="number"
               value={filters.maxPE}
               onChange={(e) => setFilters({...filters, maxPE: e.target.value})}
               placeholder="100"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
             />
           </div>
         </div>
       </div>
 
       {/* Table - same as before, keeping your existing table code */}
-      <div className="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
+      <div className="bg-black rounded-xl border border-white/10 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-slate-800">
+            <thead className="bg-white/5">
               <tr>
                 {Array.from(visibleColumns).map(column => {
                   const colDef = allColumns.find(c => c.key === column);
@@ -400,7 +400,7 @@ const Screener: React.FC = () => {
                     <th
                       key={column}
                       onClick={() => handleSort(column)}
-                      className="text-left px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-700 transition-colors"
+                      className="text-left px-4 py-3 text-sm font-semibold text-white/80 cursor-pointer hover:bg-white/10 transition-colors"
                     >
                       <div className="flex items-center gap-2">
                         {colDef?.label}
@@ -417,8 +417,8 @@ const Screener: React.FC = () => {
               {filteredAndSortedStocks.map((stock, idx) => (
                 <tr
                   key={stock.ticker}
-                  className={`border-t border-slate-800 hover:bg-slate-800 transition-colors cursor-pointer ${
-                    idx % 2 === 0 ? 'bg-slate-900' : 'bg-slate-850'
+                  className={`border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer ${
+                    idx % 2 === 0 ? 'bg-black' : 'bg-slate-850'
                   }`}
                 >
                   {Array.from(visibleColumns).map(column => (
@@ -448,7 +448,7 @@ const Screener: React.FC = () => {
         </div>
       </div>
               {/* AI Summary */}
-      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+      <div className="bg-black rounded-xl p-6 border border-white/10">
         <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
           <span>🤖</span> AI Market Analysis
         </h3>

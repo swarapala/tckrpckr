@@ -17,7 +17,7 @@ const News: React.FC = () => {
     const config = {
       positive: { bg: 'bg-green-900', text: 'text-green-400', icon: TrendingUp },
       negative: { bg: 'bg-red-900', text: 'text-red-400', icon: TrendingDown },
-      neutral: { bg: 'bg-slate-800', text: 'text-slate-400', icon: Clock },
+      neutral: { bg: 'bg-white/5', text: 'text-white/60', icon: Clock },
     };
 
     const { bg, text, icon: Icon } = config[sentiment as keyof typeof config] || config.neutral;
@@ -63,7 +63,7 @@ const News: React.FC = () => {
             <Newspaper className="text-blue-400" />
             Market News
           </h2>
-          <p className="text-slate-400 mt-2">
+          <p className="text-white/60 mt-2">
             Stay updated with the latest market movements and financial news
           </p>
         </div>
@@ -72,8 +72,8 @@ const News: React.FC = () => {
     onClick={() => setSelectedTicker(undefined)}
     className={`px-4 py-2 rounded-lg transition-colors ${
       !selectedTicker
-        ? 'bg-blue-600 text-white'
-        : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+        ? 'bg-green-600 text-white'
+        : 'bg-white/5 text-white/60 hover:bg-white/10'
     }`}
   >
     All News
@@ -83,14 +83,14 @@ const News: React.FC = () => {
     id="tickerFilter"
     placeholder="Filter by ticker..."
     autoComplete="off"
-    className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+    className="bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
   />
   <button
     onClick={() => {
       const input = document.getElementById('tickerFilter') as HTMLInputElement;
       setSelectedTicker(input.value.toUpperCase() || undefined);
     }}
-    className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm transition-colors"
+    className="bg-green-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm transition-colors"
   >
     Filter
   </button>
@@ -103,7 +103,7 @@ const News: React.FC = () => {
           news.map((article: any) => (
             <div
               key={article.id}
-              className="bg-slate-900 rounded-xl p-6 border border-slate-800 hover:border-slate-700 transition-colors cursor-pointer"
+              className="bg-black rounded-xl p-6 border border-white/10 hover:border-white/15 transition-colors cursor-pointer"
             >
               <div className="flex items-start gap-4">
                 <div className="flex-1">
@@ -114,10 +114,10 @@ const News: React.FC = () => {
                     {getSentimentBadge(article.sentiment)}
                   </div>
 
-                  <p className="text-slate-300 mb-4 line-clamp-2">{article.summary}</p>
+                  <p className="text-white/80 mb-4 line-clamp-2">{article.summary}</p>
 
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-sm text-slate-400">
+                    <div className="flex items-center gap-4 text-sm text-white/60">
                       <div className="flex items-center gap-2">
                         <Clock size={14} />
                         <span>{getTimeAgo(article.timestamp)}</span>
@@ -130,7 +130,7 @@ const News: React.FC = () => {
                         {article.tickers.map((ticker: string) => (
                           <span
                             key={ticker}
-                            className="px-3 py-1 bg-slate-800 rounded-full text-sm font-semibold text-blue-400 hover:bg-slate-700 transition-colors"
+                            className="px-3 py-1 bg-white/5 rounded-full text-sm font-semibold text-blue-400 hover:bg-white/10 transition-colors"
                           >
                             {ticker}
                           </span>
@@ -143,10 +143,10 @@ const News: React.FC = () => {
             </div>
           ))
         ) : (
-          <div className="bg-slate-900 rounded-xl p-12 border border-slate-800 text-center">
+          <div className="bg-black rounded-xl p-12 border border-white/10 text-center">
             <Newspaper size={48} className="mx-auto text-slate-600 mb-4" />
             <h3 className="text-xl font-semibold mb-2">No news available</h3>
-            <p className="text-slate-400">Check back later for the latest market updates</p>
+            <p className="text-white/60">Check back later for the latest market updates</p>
           </div>
         )}
       </div>
@@ -154,7 +154,7 @@ const News: React.FC = () => {
       {/* AI Summary Section */}
       <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 rounded-xl p-6 border border-blue-800/50">
         <h3 className="text-lg font-semibold mb-4">AI Market Summary</h3>
-        <p className="text-slate-300 leading-relaxed">
+        <p className="text-white/80 leading-relaxed">
           Today's market showed mixed signals with technology stocks leading gains while healthcare
           lagged. Federal Reserve comments on monetary policy continue to influence investor
           sentiment. Earnings season is showing strong results from major corporations, particularly

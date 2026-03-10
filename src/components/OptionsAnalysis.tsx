@@ -56,7 +56,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
 
   if (isLoading) {
     return (
-      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+      <div className="bg-black rounded-xl p-6 border border-white/10">
         <h3 className="text-xl font-semibold mb-4">Options Analysis</h3>
         <div className="flex items-center justify-center h-48">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
@@ -87,7 +87,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
   };
 
   return (
-    <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+    <div className="bg-black rounded-xl p-6 border border-white/10">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-semibold">Options Sweet Spots</h3>
         <div className="flex gap-2">
@@ -96,7 +96,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
             className={`px-4 py-2 rounded-lg text-sm transition-colors flex items-center gap-2 ${
               optionType === 'calls'
                 ? 'bg-green-600 text-white'
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
           >
             <TrendingUp size={16} />
@@ -107,7 +107,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
             className={`px-4 py-2 rounded-lg text-sm transition-colors flex items-center gap-2 ${
               optionType === 'puts'
                 ? 'bg-red-600 text-white'
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
           >
             <TrendingDown size={16} />
@@ -117,7 +117,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
       </div>
 
       {sweetSpots.length === 0 ? (
-        <div className="text-center text-slate-400 py-12">
+        <div className="text-center text-white/60 py-12">
           No options data available for {ticker}
         </div>
       ) : (
@@ -125,7 +125,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
           {sweetSpots.map((option, idx) => (
             <div
               key={`${option.strike}-${option.expiration}`}
-              className="bg-slate-800 rounded-lg p-5 hover:bg-slate-750 transition-colors"
+              className="bg-white/5 rounded-lg p-5 hover:bg-slate-750 transition-colors"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
@@ -138,13 +138,13 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
                   <div className="text-xl font-semibold text-green-400">
                     ${option.lastPrice?.toFixed(2) || 'N/A'}
                   </div>
-                  <div className="text-sm text-slate-400">Premium</div>
+                  <div className="text-sm text-white/60">Premium</div>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <div className="text-slate-400">Expiration</div>
+                  <div className="text-white/60">Expiration</div>
                   <div className="font-medium mt-1">
                     {new Date(option.expiration).toLocaleDateString('en-US', {
                       month: 'short',
@@ -158,7 +158,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
                 </div>
 
                 <div>
-                  <div className="text-slate-400">Volume / OI</div>
+                  <div className="text-white/60">Volume / OI</div>
                   <div className="font-medium mt-1">
                     {option.volume || 0} / {option.openInterest || 0}
                   </div>
@@ -168,7 +168,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
                 </div>
 
                 <div>
-                  <div className="text-slate-400">Implied Vol</div>
+                  <div className="text-white/60">Implied Vol</div>
                   <div className="font-medium mt-1">
                     {((option.impliedVolatility || 0) * 100).toFixed(1)}%
                   </div>
@@ -178,7 +178,7 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
                 </div>
 
                 <div>
-                  <div className="text-slate-400">Bid-Ask Spread</div>
+                  <div className="text-white/60">Bid-Ask Spread</div>
                   <div className="font-medium mt-1">
                     ${option.bid?.toFixed(2)} - ${option.ask?.toFixed(2)}
                   </div>
@@ -188,9 +188,9 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-slate-700">
-                <div className="flex items-center gap-2 text-xs text-slate-400">
-                  <div className="flex-1 bg-slate-700 rounded-full h-2">
+              <div className="mt-4 pt-4 border-t border-white/15">
+                <div className="flex items-center gap-2 text-xs text-white/60">
+                  <div className="flex-1 bg-white/10 rounded-full h-2">
                     <div
                       className={`h-2 rounded-full ${
                         option.score >= 70
@@ -212,12 +212,12 @@ const OptionsAnalysis: React.FC<OptionsAnalysisProps> = ({ ticker }) => {
         </div>
       )}
 
-      <div className="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700">
+      <div className="mt-6 p-4 bg-white/5 rounded-lg border border-white/15">
         <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
           <AlertCircle size={16} className="text-blue-400" />
           Analysis Criteria
         </h4>
-        <ul className="text-xs text-slate-400 space-y-1">
+        <ul className="text-xs text-white/60 space-y-1">
           <li>• Tight bid-ask spreads (&lt;5% preferred)</li>
           <li>• High liquidity (volume &gt;100, open interest &gt;1000)</li>
           <li>• Moderate implied volatility (20-60% range)</li>

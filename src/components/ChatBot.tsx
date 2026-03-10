@@ -80,18 +80,18 @@ const ChatBot: React.FC = () => {
   return (
     <div className="h-full flex flex-col space-y-4">
       {/* Header */}
-      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+      <div className="bg-black rounded-xl p-6 border border-white/10">
         <h2 className="text-3xl font-bold flex items-center gap-3 mb-2">
           <Sparkles className="text-blue-400" />
           AI Financial Assistant
         </h2>
-        <p className="text-slate-400">
+        <p className="text-white/60">
           💡 Powered by Claude - Ask me anything about stocks, investing, and market analysis
         </p>
       </div>
 
       {/* Messages Container */}
-      <div className="flex-1 bg-slate-900 rounded-xl border border-slate-800 overflow-hidden flex flex-col">
+      <div className="flex-1 bg-black rounded-xl border border-white/10 overflow-hidden flex flex-col">
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.map((message) => (
             <div
@@ -103,7 +103,7 @@ const ChatBot: React.FC = () => {
               <div
                 className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
                   message.role === 'user'
-                    ? 'bg-blue-600'
+                    ? 'bg-green-600'
                     : 'bg-gradient-to-br from-purple-600 to-blue-600'
                 }`}
               >
@@ -118,8 +118,8 @@ const ChatBot: React.FC = () => {
                 <div
                   className={`inline-block rounded-2xl px-6 py-4 ${
                     message.role === 'user'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-slate-800 text-slate-100'
+                      ? 'bg-green-600 text-white'
+                      : 'bg-white/5 text-slate-100'
                   }`}
                 >
                   {message.role === 'assistant' ? (
@@ -133,12 +133,12 @@ const ChatBot: React.FC = () => {
                           ol: ({children}) => <ol className="list-decimal ml-4 mb-3 space-y-1">{children}</ol>,
                           li: ({children}) => <li className="leading-relaxed">{children}</li>,
                           code: ({children}) => (
-                            <code className="bg-slate-700 px-2 py-0.5 rounded text-blue-300 text-sm font-mono">
+                            <code className="bg-white/10 px-2 py-0.5 rounded text-blue-300 text-sm font-mono">
                               {children}
                             </code>
                           ),
                           pre: ({children}) => (
-                            <pre className="bg-slate-700 p-3 rounded-lg overflow-x-auto mb-3">
+                            <pre className="bg-white/10 p-3 rounded-lg overflow-x-auto mb-3">
                               {children}
                             </pre>
                           ),
@@ -146,7 +146,7 @@ const ChatBot: React.FC = () => {
                           h2: ({children}) => <h2 className="text-lg font-bold mb-2 text-blue-300">{children}</h2>,
                           h3: ({children}) => <h3 className="text-base font-bold mb-2 text-purple-300">{children}</h3>,
                           blockquote: ({children}) => (
-                            <blockquote className="border-l-4 border-blue-500 pl-4 italic my-3 text-slate-300">
+                            <blockquote className="border-l-4 border-blue-500 pl-4 italic my-3 text-white/80">
                               {children}
                             </blockquote>
                           ),
@@ -174,7 +174,7 @@ const ChatBot: React.FC = () => {
               <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
                 <Bot size={20} />
               </div>
-              <div className="bg-slate-800 rounded-2xl px-6 py-4">
+              <div className="bg-white/5 rounded-2xl px-6 py-4">
                 <div className="flex gap-2 items-center">
                   <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
                   <div
@@ -185,7 +185,7 @@ const ChatBot: React.FC = () => {
                     className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
                     style={{ animationDelay: '0.4s' }}
                   ></div>
-                  <span className="ml-2 text-sm text-slate-400">Thinking...</span>
+                  <span className="ml-2 text-sm text-white/60">Thinking...</span>
                 </div>
               </div>
             </div>
@@ -196,14 +196,14 @@ const ChatBot: React.FC = () => {
 
         {/* Quick Questions */}
         {messages.length === 1 && (
-          <div className="border-t border-slate-800 p-4 bg-slate-850">
-            <div className="text-sm text-slate-400 mb-3">💡 Quick questions to get started:</div>
+          <div className="border-t border-white/10 p-4 bg-slate-850">
+            <div className="text-sm text-white/60 mb-3">💡 Quick questions to get started:</div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {quickQuestions.map((question, idx) => (
                 <button
                   key={idx}
                   onClick={() => setInput(question.text)}
-                  className="text-left text-sm bg-slate-800 hover:bg-slate-700 rounded-lg px-4 py-3 transition-colors flex items-center gap-2"
+                  className="text-left text-sm bg-white/5 hover:bg-white/10 rounded-lg px-4 py-3 transition-colors flex items-center gap-2"
                 >
                   <span className="text-lg">{question.emoji}</span>
                   <span>{question.text}</span>
@@ -214,7 +214,7 @@ const ChatBot: React.FC = () => {
         )}
 
         {/* Input Area */}
-        <div className="border-t border-slate-800 p-4 bg-slate-850">
+        <div className="border-t border-white/10 p-4 bg-slate-850">
           <div className="flex gap-2">
             <input
               type="text"
@@ -222,13 +222,13 @@ const ChatBot: React.FC = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
               placeholder="💬 Ask about stocks, market trends, or investing strategies..."
-              className="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="flex-1 bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               disabled={isLoading}
             />
             <button
               onClick={handleSend}
               disabled={!input.trim() || isLoading}
-              className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2"
+              className="bg-green-600 hover:bg-blue-700 disabled:bg-white/10 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2"
             >
               <Send size={18} />
             </button>

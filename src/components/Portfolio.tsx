@@ -116,22 +116,22 @@ useEffect(() => {
     <div className="space-y-6">
       {/* Portfolio Summary */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
-          <div className="text-sm text-slate-400 mb-2">Total Value</div>
+        <div className="bg-black rounded-xl p-6 border border-white/10">
+          <div className="text-sm text-white/60 mb-2">Total Value</div>
           <div className="text-3xl font-bold">${portfolioValue.toFixed(2)}</div>
         </div>
-        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
-          <div className="text-sm text-slate-400 mb-2">Total Cost</div>
+        <div className="bg-black rounded-xl p-6 border border-white/10">
+          <div className="text-sm text-white/60 mb-2">Total Cost</div>
           <div className="text-3xl font-bold">${totalCost.toFixed(2)}</div>
         </div>
-        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
-          <div className="text-sm text-slate-400 mb-2">Gain/Loss</div>
+        <div className="bg-black rounded-xl p-6 border border-white/10">
+          <div className="text-sm text-white/60 mb-2">Gain/Loss</div>
           <div className={`text-3xl font-bold ${totalGainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
             {totalGainLoss >= 0 ? '+' : ''}${totalGainLoss.toFixed(2)}
           </div>
         </div>
-        <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
-          <div className="text-sm text-slate-400 mb-2">Return</div>
+        <div className="bg-black rounded-xl p-6 border border-white/10">
+          <div className="text-sm text-white/60 mb-2">Return</div>
           <div className={`text-3xl font-bold flex items-center gap-2 ${totalGainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
             {totalGainLossPercent >= 0 ? <TrendingUp /> : <TrendingDown />}
             {totalGainLossPercent >= 0 ? '+' : ''}{totalGainLossPercent.toFixed(2)}%
@@ -140,12 +140,12 @@ useEffect(() => {
       </div>
 
       {/* Positions Table */}
-      <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
+      <div className="bg-black rounded-xl p-6 border border-white/10">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-semibold">Your Positions</h3>
           <button 
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-green-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
             <Plus size={18} />
             Add Position
@@ -155,23 +155,23 @@ useEffect(() => {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-slate-800">
-                <th className="text-left py-3 px-4 text-sm font-semibold text-slate-400">Ticker</th>
-                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Shares</th>
-                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Avg Cost</th>
-                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Current Price</th>
-                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Total Cost</th>
-                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Current Value</th>
-                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Gain/Loss</th>
-                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Return %</th>
-                <th className="text-right py-3 px-4 text-sm font-semibold text-slate-400">Actions</th>
+              <tr className="border-b border-white/10">
+                <th className="text-left py-3 px-4 text-sm font-semibold text-white/60">Ticker</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-white/60">Shares</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-white/60">Avg Cost</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-white/60">Current Price</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-white/60">Total Cost</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-white/60">Current Value</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-white/60">Gain/Loss</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-white/60">Return %</th>
+                <th className="text-right py-3 px-4 text-sm font-semibold text-white/60">Actions</th>
               </tr>
             </thead>
             <tbody>
               {positions.map((position) => {
                 const metrics = calculateMetrics(position);
                 return (
-                  <tr key={position.id} className="border-b border-slate-800 hover:bg-slate-800 transition-colors">
+                  <tr key={position.id} className="border-b border-white/10 hover:bg-white/5 transition-colors">
                     <td className="py-3 px-4">
                       <span className="font-semibold text-blue-400">{position.ticker}</span>
                     </td>
@@ -216,7 +216,7 @@ useEffect(() => {
       {/* Add/Edit Position Modal */}
 {(showAddModal || editingPosition) && (
   <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-    <div className="bg-slate-900 rounded-xl p-6 max-w-md w-full border border-slate-800">
+    <div className="bg-black rounded-xl p-6 max-w-md w-full border border-white/10">
       <h3 className="text-xl font-bold mb-4">
         {editingPosition ? 'Edit Position' : 'Add New Position'}
       </h3>
@@ -232,7 +232,7 @@ useEffect(() => {
             }
             placeholder="AAPL"
             disabled={!!editingPosition}
-            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 disabled:opacity-50"
+            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 disabled:opacity-50"
           />
         </div>
         <div>
@@ -245,7 +245,7 @@ useEffect(() => {
               : setNewPosition({...newPosition, shares: e.target.value})
             }
             placeholder="10"
-            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
           />
         </div>
         <div>
@@ -259,7 +259,7 @@ useEffect(() => {
             }
             placeholder="150.00"
             step="0.01"
-            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
           />
         </div>
         <div className="flex gap-2 pt-4">
@@ -289,7 +289,7 @@ useEffect(() => {
                 }
               }
             }}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-lg transition-colors"
+            className="flex-1 bg-green-600 hover:bg-blue-700 py-2 rounded-lg transition-colors"
           >
             {editingPosition ? 'Save Changes' : 'Add Position'}
           </button>
@@ -299,7 +299,7 @@ useEffect(() => {
               setEditingPosition(null);
               setNewPosition({ ticker: '', shares: '', avgCost: '' });
             }}
-            className="flex-1 bg-slate-700 hover:bg-slate-600 py-2 rounded-lg transition-colors"
+            className="flex-1 bg-white/10 hover:bg-slate-600 py-2 rounded-lg transition-colors"
           >
             Cancel
           </button>
