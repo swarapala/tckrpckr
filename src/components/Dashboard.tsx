@@ -24,8 +24,7 @@ const Dashboard: React.FC = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-slate-950">
-      {/* Sidebar */}
+<div className="flex h-screen bg-black">      {/* Sidebar */}
       {/* Mobile Menu Button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -47,7 +46,7 @@ const Dashboard: React.FC = () => {
       {/* Sidebar */}
       <aside className={`
         fixed lg:relative inset-y-0 left-0 z-40
-        w-64 bg-slate-900 border-r border-slate-800 flex flex-col
+        w-64 bg-black border-r border-white/10 flex flex-col
         transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
@@ -96,7 +95,7 @@ const Dashboard: React.FC = () => {
       {/* Main Content */}
       <main className="flex-1 overflow-hidden flex flex-col">
         {/* Top Bar */}
-        <header className="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6">
+        <header className="h-16 bg-black border-b border-white/10 flex items-center justify-between px-6">
           <div className="flex items-center gap-4 flex-1 max-w-2xl">
             <Search className="text-slate-400" size={20} />
             <input
@@ -146,7 +145,7 @@ const Dashboard: React.FC = () => {
         </div>
         
         {/* Footer */}
-        <footer className="border-t border-slate-800 bg-slate-900 px-6 py-4">
+        <footer className="border-t border-white/10 bg-black px-6 py-4">
           <div className="flex items-center justify-between text-sm text-slate-400">
             <div className="flex items-center gap-4">
               <span>© 2026 <span className="text-green-400">tckr</span><span className="text-red-400">pckr</span></span>              <span className="text-slate-600">•</span>
