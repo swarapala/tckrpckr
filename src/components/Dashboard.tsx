@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Settings from './Settings';
 import { TrendingUp, BarChart3, BookOpen, MessageSquare, Settings as SettingsIcon, Search, Bell, Filter } from 'lucide-react';
 import MarketOverview from './MarketOverview';
@@ -24,6 +24,47 @@ const Dashboard: React.FC = () => {
     { id: 'chat' as View, label: 'AI Assistant', icon: MessageSquare },
     { id: 'screener' as View, label: 'Screener', icon: Filter },
   ];
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // Don't trigger if user is typing in an input
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      switch (e.key) {
+        case '/':
+          e.preventDefault();
+          document.querySelector<HTMLInputElement>('input[type="text"]')?.focus();
+          break;
+        case '1':
+          setCurrentView('market');
+          break;
+        case '2':
+          setCurrentView('analysis');
+          break;
+        case '3':
+          setCurrentView('portfolio');
+          break;
+        case '4':
+          setCurrentView('news');
+          break;
+        case '5':
+          setCurrentView('chat');
+          break;
+        case '6':
+          setCurrentView('screener');
+          break;
+        case 's':
+          setCurrentView('settings');
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, []);
 
   return (
 <div className="flex h-screen" style={{ background: 'linear-gradient(135deg, #021008 0%, #000000 50%, #021008 100%)' }}>      <button
@@ -158,6 +199,8 @@ const Dashboard: React.FC = () => {
               <span>© 2026 <span className="text-green-400">tckr</span><span className="text-red-400">pckr</span></span>              
               <span className="text-white/40">•</span>
               <span>v1.0.0 Beta</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/40 text-xs">Press "/" to search, 1-6 for navigation</span>
             </div>
             <div className="flex items-center gap-4">
               <a href="#" className="hover:text-white/90 transition-colors">Terms</a>

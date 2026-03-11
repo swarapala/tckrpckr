@@ -25,6 +25,20 @@ const Portfolio: React.FC = () => {
     { id: '2', ticker: 'MSFT', shares: 30, avgCost: 350.00, currentPrice: 380.25 },
     { id: '3', ticker: 'GOOGL', shares: 20, avgCost: 135.00, currentPrice: 142.30 },
   ]);
+  // Close modal on Esc key
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowAddModal(false);
+        setEditingPosition(null);
+      }
+    };
+
+    if (showAddModal || editingPosition) {
+      window.addEventListener('keydown', handleEsc);
+      return () => window.removeEventListener('keydown', handleEsc);
+    }
+  }, [showAddModal, editingPosition]);
 // Fetch real-time prices on mount only
 useEffect(() => {
   const updatePrices = async () => {
