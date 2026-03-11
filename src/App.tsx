@@ -1,44 +1,24 @@
-import React, { useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from 'react-hot-toast';
-import Dashboard from './components/Dashboard';
-import Auth from './components/Auth';
-import './App.css';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: 1,
-      staleTime: 30000,
-    },
-  },
-});
+import { useState } from 'react'
+import './App.css'
+import Auth from './components/Auth'
+import Dashboard from './components/Dashboard'
+import { useAuth } from './contexts/AuthContext'
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { user, loading } = useAuth();
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-slate-950 text-slate-100">
-        {!isAuthenticated ? (
-          <Auth onLogin={() => setIsAuthenticated(true)} />
-        ) : (
-          <Dashboard />
-        )}
-        <Toaster 
-          position="top-right"
-          toastOptions={{
-            style: {
-              background: '#1e293b',
-              color: '#f1f5f9',
-              border: '1px solid #334155',
-            },
-          }}
-        />
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-white/80">Loading...</p>
+        </div>
       </div>
-    </QueryClientProvider>
-  );
+    );
+  }
+
+  return user ? <Dashboard /> : <Auth />;
 }
 
-export default App;
+export default App

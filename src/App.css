@@ -33,8 +33,8 @@ body {
 input:focus, 
 textarea:focus, 
 select:focus {
-  border-color: rgb(34 197 94) !important;
-  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.1) !important;
+  border-color: rgb(16 185 129) !important; /* emerald-500 */
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1) !important;
 }
 
 button:focus {
