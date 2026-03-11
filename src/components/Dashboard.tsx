@@ -7,6 +7,7 @@ import ChatBot from './ChatBot';
 import Screener from './Screener';
 import StockAnalysis from './StockAnalysis';
 import Portfolio from './Portfolio';
+import { useAuth } from '../contexts/AuthContext';
 
 
 type View = 'market' | 'analysis' | 'portfolio' | 'news' | 'chat' | 'screener' | 'settings';
@@ -15,7 +16,7 @@ const Dashboard: React.FC = () => {
   const [selectedTicker, setSelectedTicker] = useState<string>('AAPL');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-
+  const { signOut, user } = useAuth();
   const navigationItems = [
     { id: 'market' as View, label: 'Market', icon: TrendingUp },
     { id: 'analysis' as View, label: 'Analysis', icon: BarChart3 },
@@ -168,11 +169,18 @@ const Dashboard: React.FC = () => {
               <span className="absolute top-1 right-1 w-2 h-2 bg-emerald-600 rounded-full"></span>
             </button>
             <div className="flex items-center gap-3">
-<div className="w-8 h-8 rounded-full bg-white/20"></div>              <div className="text-sm">
-                <div className="font-medium">Swara Palanivel</div>
-                <div className="text-xs text-white/60">demo platform</div>
-              </div>
-            </div>
+  <div className="w-8 h-8 rounded-full bg-white/20"></div>
+  <div className="text-sm">
+    <div className="font-medium">{user?.user_metadata?.full_name || 'User'}</div>
+    <div className="text-xs text-white/60">{user?.email}</div>
+  </div>
+  <button
+    onClick={signOut}
+    className="ml-2 px-3 py-1 text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-colors"
+  >
+    Logout
+  </button>
+</div>
           </div>
         </header>
 
