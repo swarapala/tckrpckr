@@ -49,6 +49,40 @@ const StockAnalysis: React.FC<StockAnalysisProps> = ({ ticker, onTickerChange })
     </div>
   );
 }
+if (quoteLoading || dataLoading) {
+  return (
+    <div className="flex items-center justify-center h-full">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
+        <p className="text-xl text-white/80">Loading {ticker} data...</p>
+        <p className="text-sm text-white/50 mt-2">Fetching real-time stock information...</p>
+      </div>
+    </div>
+  );
+}
+
+// Error state - if no quote data found
+if (!quote || !quote.price) {
+  return (
+    <div className="flex items-center justify-center h-full">
+      <div className="bg-black border border-white/10 rounded-2xl p-8 max-w-md text-center">
+        <div className="text-6xl mb-4">📊</div>
+        <h2 className="text-2xl font-bold mb-2">Stock Not Found</h2>
+        <p className="text-white/60 mb-6">
+          We couldn't find data for ticker symbol <span className="text-green-400 font-semibold">{ticker}</span>
+        </p>
+        <div className="space-y-3 text-sm text-white/50 text-left bg-white/5 rounded-lg p-4">
+          <p>💡 <strong>Tips:</strong></p>
+          <ul className="list-disc list-inside space-y-1 ml-2">
+            <li>Check the ticker symbol spelling</li>
+            <li>Try major stocks like AAPL, MSFT, GOOGL, TSLA</li>
+            <li>Make sure it's a US-listed stock</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="space-y-6">

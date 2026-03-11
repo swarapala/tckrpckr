@@ -255,6 +255,26 @@ const Screener: React.FC = () => {
       </div>
     );
   }
+  // Error state - if no stocks loaded
+if (!loading && stocks.length === 0) {
+  return (
+    <div className="flex items-center justify-center h-full">
+      <div className="bg-black border border-white/10 rounded-2xl p-8 max-w-md text-center">
+        <div className="text-6xl mb-4">⚠️</div>
+        <h2 className="text-2xl font-bold mb-2">No Stocks Loaded</h2>
+        <p className="text-white/60 mb-6">
+          We couldn't load stock data. Please try refreshing the page.
+        </p>
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-3 rounded-lg transition-colors"
+        >
+          Refresh Page
+        </button>
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="space-y-6">

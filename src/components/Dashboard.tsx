@@ -106,14 +106,19 @@ const Dashboard: React.FC = () => {
               placeholder="Search stocks, ETFs, or ask a question..."
               className="flex-1 bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
               onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  const value = e.currentTarget.value.toUpperCase();
-                  if (value) {
-                    setSelectedTicker(value);
-                    setCurrentView('analysis');
-                  }
-                }
-              }}
+  if (e.key === 'Enter') {
+    const value = e.currentTarget.value.toUpperCase().trim();
+    if (value) {
+      if (value.length > 5) {
+        alert('⚠️ Ticker symbols are usually 1-5 characters (e.g., AAPL, MSFT)');
+        return;
+      }
+      setSelectedTicker(value);
+      setCurrentView('analysis');
+      e.currentTarget.value = ''; // Clear search box
+    }
+  }
+}}
             />
           </div>
           <div className="flex items-center gap-4">
