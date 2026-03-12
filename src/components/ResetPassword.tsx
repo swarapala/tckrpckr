@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { useNavigate } from 'react-router-dom';
 
 const ResetPassword: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -9,18 +8,23 @@ const ResetPassword: React.FC = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const navigate = useNavigate();
+  const [validLink, setValidLink] = useState(false);
 
   useEffect(() => {
     // Check if user came from password reset link
     const hashParams = new URLSearchParams(window.location.hash.substring(1));
     const type = hashParams.get('type');
+    const accessToken = hashParams.get('access_token');
     
-    if (type !== 'recovery') {
-      // Not a valid reset link, redirect to login
-      navigate('/');
+    if (type === 'recovery' && accessToken) {
+      setValidLink(true);
+    } else {
+      // Invalid link, redirect to home after 2 seconds
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 2000);
     }
-  }, [navigate]);
+  }, []);
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,9 +51,10 @@ const ResetPassword: React.FC = () => {
         setError(error.message);
       } else {
         setSuccess(true);
-        // Redirect to login after 2 seconds
-        setTimeout(() => {
-          navigate('/');
+        // Sign out and redirect to login after 2 seconds
+        setTimeout(async () => {
+          await supabase.auth.signOut();
+          window.location.href = '/';
         }, 2000);
       }
     } catch (err: any) {
@@ -58,6 +63,20 @@ const ResetPassword: React.FC = () => {
       setLoading(false);
     }
   };
+
+  if (!validLink) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-emerald-950 via-black to-emerald-960 flex items-center justify-center p-4">
+        <div className="bg-black border border-white/10 rounded-2xl p-8 max-w-md w-full text-center">
+          <div className="text-6xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold mb-2">Invalid Reset Link</h2>
+          <p className="text-white/60 mb-6">
+            This password reset link is invalid or has expired. Redirecting...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (success) {
     return (
