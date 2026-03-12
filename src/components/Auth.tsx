@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
 
 const Auth: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -10,10 +11,13 @@ const Auth: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetSent, setResetSent] = useState(false);
   
   const { signIn, signUp } = useAuth();
 
- const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     
@@ -38,6 +42,29 @@ const Auth: React.FC = () => {
         const { error } = await signUp(email, password, fullName);
         if (error) setError(error.message);
         else setError('Check your email to confirm your account!');
+      }
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+        redirectTo: 'https://tickpickv1.vercel.app/reset-password',
+      });
+
+      if (error) {
+        setError(error.message);
+      } else {
+        setResetSent(true);
+        setError('Check your email for password reset instructions!');
       }
     } catch (err: any) {
       setError(err.message);
@@ -120,7 +147,7 @@ const Auth: React.FC = () => {
               />
             </div>
 
-           <div>
+            <div>
               <label className="block text-sm font-medium text-white/80 mb-2">
                 Password {!isLogin && <span className="text-white/40 text-xs">(min 6 characters)</span>}
               </label>
@@ -156,6 +183,18 @@ const Auth: React.FC = () => {
               )}
             </div>
 
+            {isLogin && (
+              <div className="text-right">
+                <button
+                  type="button"
+                  onClick={() => setShowForgotPassword(true)}
+                  className="text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
+                >
+                  Forgot password?
+                </button>
+              </div>
+            )}
+
             {!isLogin && (
               <div>
                 <label className="block text-sm font-medium text-white/80 mb-2">
@@ -181,7 +220,6 @@ const Auth: React.FC = () => {
                   ? 'bg-green-500/10 text-green-400 border border-green-500/20'
                   : 'bg-red-500/10 text-red-400 border border-red-500/20'
               }`}>
-
                 {error}
               </div>
             )}
@@ -219,6 +257,86 @@ const Auth: React.FC = () => {
           <p>© 2026 <span className="text-green-400">tckr</span><span className="text-red-400">pckr</span></p>
         </div>
       </div>
+
+      {/* Forgot Password Modal */}
+      {showForgotPassword && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+          <div className="bg-black border border-white/10 rounded-2xl p-8 max-w-md w-full">
+            <h3 className="text-2xl font-bold mb-4">Reset Password</h3>
+            
+            {!resetSent ? (
+              <form onSubmit={handlePasswordReset} className="space-y-4">
+                <p className="text-white/60 text-sm mb-4">
+                  Enter your email address and we'll send you a link to reset your password.
+                </p>
+                
+                <div>
+                  <label className="block text-sm font-medium text-white/80 mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    value={resetEmail}
+                    onChange={(e) => setResetEmail(e.target.value)}
+                    required
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-emerald-600/50 focus:ring-2 focus:ring-emerald-600/20 transition-all text-white placeholder:text-white/30"
+                    placeholder="you@example.com"
+                  />
+                </div>
+
+                {error && (
+                  <div className={`text-sm p-3 rounded-lg ${
+                    error.includes('Check your email')
+                      ? 'bg-green-500/10 text-green-400 border border-green-500/20'
+                      : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                  }`}>
+                    {error}
+                  </div>
+                )}
+
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowForgotPassword(false);
+                      setResetEmail('');
+                      setError('');
+                    }}
+                    className="flex-1 bg-white/10 hover:bg-white/20 py-3 rounded-lg transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="flex-1 bg-emerald-700 hover:bg-emerald-800 disabled:bg-white/5 py-3 rounded-lg transition-colors"
+                  >
+                    {loading ? 'Sending...' : 'Send Reset Link'}
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <div className="text-center py-4">
+                <div className="text-6xl mb-4">✉️</div>
+                <p className="text-white/80 mb-6">
+                  Password reset email sent! Check your inbox and follow the instructions.
+                </p>
+                <button
+                  onClick={() => {
+                    setShowForgotPassword(false);
+                    setResetSent(false);
+                    setResetEmail('');
+                    setError('');
+                  }}
+                  className="bg-emerald-700 hover:bg-emerald-800 px-6 py-3 rounded-lg transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

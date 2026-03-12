@@ -8,7 +8,7 @@ import {
   updatePosition as updatePositionDB,
   deletePosition as deletePositionDB,
   Position,
-} from '../services/portfolio';
+} from '../services/portfolio.ts';
 
 const Portfolio: React.FC = () => {
   const [positions, setPositions] = useState<Position[]>([]);
