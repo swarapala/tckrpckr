@@ -213,7 +213,7 @@ const Dashboard: React.FC = () => {
             <div className="flex items-center gap-4">
               <a href="#" className="hover:text-white/90 transition-colors">Terms</a>
               <a href="#" className="hover:text-white/90 transition-colors">Privacy</a>
-              <a href="https://github.com/swarapala/tickpickv1" target="_blank" rel="noopener noreferrer" className="hover:text-white/90 transition-colors">GitHub</a>
+              <a href="https://github.com/swarapala/tckrpckr" target="_blank" rel="noopener noreferrer" className="hover:text-white/90 transition-colors">GitHub</a>
             </div>
           </div>
         </footer>
