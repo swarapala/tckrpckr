@@ -57,7 +57,7 @@ const Auth: React.FC = () => {
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-        redirectTo: 'https://tickpickv1.vercel.app/reset-password',
+        redirectTo: 'https://tckrpckr.vercel.app/reset-password',
       });
 
       if (error) {
@@ -128,7 +128,7 @@ const Auth: React.FC = () => {
                   onChange={(e) => setFullName(e.target.value)}
                   required={!isLogin}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-emerald-600/50 focus:ring-2 focus:ring-emerald-600/20 transition-all text-white placeholder:text-white/30"
-                  placeholder="Swara Palanivel"
+                  placeholder="first and last name"
                 />
               </div>
             )}
@@ -143,7 +143,7 @@ const Auth: React.FC = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-emerald-600/50 focus:ring-2 focus:ring-emerald-600/20 transition-all text-white placeholder:text-white/30"
-                placeholder="you@example.com"
+                placeholder="email address"
               />
             </div>
 
@@ -159,7 +159,7 @@ const Auth: React.FC = () => {
                   required
                   minLength={6}
                   className="w-full px-4 py-3 pr-12 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-emerald-600/50 focus:ring-2 focus:ring-emerald-600/20 transition-all text-white placeholder:text-white/30"
-                  placeholder="••••••••"
+                  placeholder="••••••"
                 />
                 <button
                   type="button"
