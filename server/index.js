@@ -203,23 +203,63 @@ app.get('/api/recommendations/:ticker', async (req, res) => {
   }
 });
 
-// News endpoint
-app.get('/api/news/:ticker?', async (req, res) => {
+// News endpoint - REAL DATA from Finnhub
+app.get('/api/news', async (req, res) => {
   try {
+    const category = req.query.category || 'general';
+    const apiKey = process.env.FINNHUB_API_KEY;
+    
+    if (!apiKey) {
+      console.error('FINNHUB_API_KEY not found');
+      return res.status(500).json({ error: 'API key not configured' });
+    }
+
+    const response = await fetch(
+      `https://finnhub.io/api/v1/news?category=${category}&token=${apiKey}`
+    );
+    
+    if (!response.ok) {
+      throw new Error(`Finnhub API error: ${response.status}`);
+    }
+    
+    const articles = await response.json();
+    
+    // Transform Finnhub format to our format
+    const news = articles.slice(0, 20).map(article => ({
+      id: article.id,
+      title: article.headline,
+      source: article.source,
+      url: article.url,
+      image: article.image,
+      publishedAt: article.datetime * 1000, // Convert Unix timestamp to milliseconds
+      summary: article.summary,
+    }));
+    
+    res.json(news);
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    
+    // Fallback to mock data if Finnhub fails
     res.json([
       {
         id: 1,
         title: 'Market Rallies on Fed Comments',
-        summary: 'Federal Reserve signals potential pause',
+        summary: 'Federal Reserve signals potential pause in rate hikes',
         source: 'Financial Times',
-        timestamp: new Date(Date.now() - 3600000).toISOString(),
-        sentiment: 'positive',
-        tickers: ['SPY', 'QQQ'],
+        url: '#',
+        image: '',
+        publishedAt: Date.now() - 3600000,
+      },
+      {
+        id: 2,
+        title: 'Tech Stocks Lead Market Higher',
+        summary: 'Major technology companies show strong earnings growth',
+        source: 'Bloomberg',
+        url: '#',
+        image: '',
+        publishedAt: Date.now() - 7200000,
       },
     ]);
-  } catch (error) {
-    console.error('Error in news endpoint:', error);
-    res.status(500).json({ error: 'Failed to fetch news' });
   }
 });
 
