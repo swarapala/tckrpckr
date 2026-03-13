@@ -12,8 +12,12 @@ function App() {
   // Handle Supabase email confirmation redirects
   useEffect(() => {
     const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    if (hashParams.get('type') === 'signup') {
-      window.history.replaceState(null, '', window.location.pathname);
+    const type = hashParams.get('type');
+    
+    if (type === 'signup') {
+      // Email confirmed! Clean URL and show success
+      window.history.replaceState(null, '', '/');
+      // Supabase auto-logs them in, they'll see dashboard
     }
   }, []);
 
