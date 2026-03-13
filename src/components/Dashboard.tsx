@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Settings from './Settings';
-import { TrendingUp, BarChart3, BookOpen, MessageSquare, Settings as SettingsIcon, Search, Bell, Filter } from 'lucide-react';
+import { TrendingUp, BarChart3, BookOpen, MessageSquare, Settings as SettingsIcon, Search, Bell, Filter, Star } from 'lucide-react';
 import MarketOverview from './MarketOverview';
 import News from './News';
 import ChatBot from './ChatBot';
@@ -8,9 +8,10 @@ import Screener from './Screener';
 import StockAnalysis from './StockAnalysis';
 import Portfolio from './Portfolio';
 import { useAuth } from '../contexts/AuthContext';
+import Watchlist from './Watchlist';
 
 
-type View = 'market' | 'analysis' | 'portfolio' | 'news' | 'chat' | 'screener' | 'settings';
+type View = 'market' | 'analysis' | 'portfolio' | 'news' | 'chat' | 'screener' | 'watchlist' | 'settings';
 const Dashboard: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>('market');
   const [selectedTicker, setSelectedTicker] = useState<string>('AAPL');
@@ -24,6 +25,7 @@ const Dashboard: React.FC = () => {
     { id: 'news' as View, label: 'News', icon: BookOpen },
     { id: 'chat' as View, label: 'AI Assistant', icon: MessageSquare },
     { id: 'screener' as View, label: 'Screener', icon: Filter },
+    { id: 'watchlist' as View, label: 'Watchlist', icon: Star },
   ];
 
   // Keyboard shortcuts
@@ -197,6 +199,7 @@ const Dashboard: React.FC = () => {
           {currentView === 'news' && <News />}
           {currentView === 'chat' && <ChatBot />}
           {currentView === 'screener' && <Screener />}
+          {currentView === 'watchlist' && <Watchlist />}
           {currentView === 'settings' && <Settings />}
         </div>
         
