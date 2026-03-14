@@ -11,20 +11,16 @@ const ResetPassword: React.FC = () => {
   const [validLink, setValidLink] = useState(false);
 
   useEffect(() => {
-    // Check if user came from password reset link
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const type = hashParams.get('type');
-    const accessToken = hashParams.get('access_token');
-    
-    if (type === 'recovery' && accessToken) {
-      setValidLink(true);
-    } else {
-      // Invalid link, redirect to home after 2 seconds
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 2000);
-    }
-  }, []);
+  // Check if user came from password reset link
+  const hashParams = new URLSearchParams(window.location.hash.substring(1));
+  const type = hashParams.get('type');
+  
+  console.log('Reset page loaded, type:', type);
+  console.log('Hash:', window.location.hash);
+  
+  // Set valid link to true by default, let Supabase handle auth
+  setValidLink(true);
+}, []);
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
