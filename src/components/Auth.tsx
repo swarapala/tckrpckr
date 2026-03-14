@@ -120,7 +120,7 @@ const Auth: React.FC = () => {
             {!isLogin && (
               <div>
                 <label className="block text-sm font-medium text-white/80 mb-2">
-                  Full Name
+                  Name
                 </label>
                 <input
                   type="text"
@@ -128,13 +128,13 @@ const Auth: React.FC = () => {
                   onChange={(e) => setFullName(e.target.value)}
                   required={!isLogin}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-emerald-600/50 focus:ring-2 focus:ring-emerald-600/20 transition-all text-white placeholder:text-white/30"
-                  placeholder="first and last name"
+                  placeholder="First and Last Name"
                 />
               </div>
             )}
             
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
+              <label className="block Stext-sm font-medium text-white/80 mb-2">
                 Email
               </label>
               <input
@@ -143,8 +143,8 @@ const Auth: React.FC = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-emerald-600/50 focus:ring-2 focus:ring-emerald-600/20 transition-all text-white placeholder:text-white/30"
-                placeholder="email address"
-              />
+                placeholder="you@example.com"
+                />
             </div>
 
             <div>
@@ -159,7 +159,7 @@ const Auth: React.FC = () => {
                   required
                   minLength={6}
                   className="w-full px-4 py-3 pr-12 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-emerald-600/50 focus:ring-2 focus:ring-emerald-600/20 transition-all text-white placeholder:text-white/30"
-                  placeholder="••••••"
+                  placeholder="••••••••"
                 />
                 <button
                   type="button"
