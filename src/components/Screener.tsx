@@ -99,7 +99,8 @@ const Screener: React.FC = () => {
 
       const stockPromises = majorTickers.map(async (ticker) => {
         try {
-          const response = await axios.get(`https://tickpickv1-production.up.railway.app/api/quote/${ticker}`);
+          const apiUrl = (import.meta as any).env.VITE_APP_API_URL;
+          const response = await axios.get(`${apiUrl.replace('/api', '')}/api/quote/${ticker}`);
           const data = response.data;
           
           return {
